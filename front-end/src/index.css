@@ -10,3 +10,7 @@
   list-style: none;
 }
 
+
+h1 {
+  font-family: var(--font-title);
+}
