@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@500&family=M+PLUS+Rounded+1c:wght@700&display=swap');
+footer {
+    width: 100vw;
+    height: 120px;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+}
+
+footer p {
+    font-family: "Rounded Mplus 1c Bold";
+    font-weight: bold;
+    font-size: 2rem;
+    color: var(--marrom-principal);
+}
