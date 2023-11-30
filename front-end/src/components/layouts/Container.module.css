@@ -7,7 +7,7 @@
 }
 
 .min_height {
-    min-height: 75vh;
+    min-height: 800px;
 }
 
 .start {
@@ -20,5 +20,26 @@
 }
 
 .background {
-    background-color: #7b7b7b;
+    width: 100vw;
+    height: 800px;
+    background-color: #CED8F2;
+}
+.backgroundStandart {
+    width: 100vw;
+    height: 800px;
+    background-color: var(--bg-color);
+}
+
+.backgroundWhite {
+    width: 100vw;
+    height: 800px;
+    background-color: #efefef;
+}
+
+.background-img{
+    width: 100vw;
+    height: 800px;
+    background-image: url("../../../assets/images/bg.jpeg");
+    background-position: center;
+    background-size: cover;
 }

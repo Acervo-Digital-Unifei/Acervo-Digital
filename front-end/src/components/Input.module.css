@@ -1,0 +1,14 @@
+.input {
+    margin-bottom: 8rem;
+}
+.input input {
+    width: 400px;
+    height: 20px;
+    padding: 10px;
+    border: none;
+    background-color: #FFF;
+    color: var(--marrom-principal);
+    text-align: left;
+    border-radius: 5px;
+}
+

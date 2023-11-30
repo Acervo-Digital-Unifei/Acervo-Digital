@@ -4,7 +4,7 @@ import styles from './Navbar.module.css'
 import Logo from '../../../assets/images/logopng.png'
 import { MdShoppingCart } from "react-icons/md";
 import { IoPerson } from "react-icons/io5";
-export default function Navbar() {
+export default function Navbar({props}) {
     return (
         
         <nav className={styles.navbar}>
@@ -12,8 +12,12 @@ export default function Navbar() {
                 <Link to='/'><img src={Logo} className={styles.logo}/></Link>
                 <h1>ACERVO DIGITAL</h1>
                 <div>
-                    <MdShoppingCart className={styles.icon}/>
-                    <IoPerson className={styles.icon}/>
+                    <Link to="/carrinho">
+                        <MdShoppingCart className={styles.icon}/>
+                    </Link>
+                    <Link to='/login'>
+                        <IoPerson className={styles.icon}/>
+                    </Link>
                 </div>
                 
             </header>
@@ -24,6 +28,11 @@ export default function Navbar() {
                 <li className={styles.item}>
                     <Link to='/'>Home</Link>
                 </li>
+                {props && props.map((item) => (
+                <li className={styles.item}>
+                    <Link to={item.link}>{item.text}</Link>
+                </li>
+                ))}
             </ul>
         </nav>
     )

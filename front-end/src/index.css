@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@500&family=M+PLUS+Rounded+1c:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ruluko&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@700&display=swap');
 :root {
+  --laranja: #F24405;
   --marrom-principal:#400101;
   --bg-color:#F2ECCE;
+  --bg-sombra: #CFC9B0;
   --icon-color:#8C513B;
   --input-color:#90513A;
-  --font-principal:"Crimson Pro";
-  --font-input:"Ruluko";
-  --font-contatos:"Rounded Mplus 1c Bold";
+  --font-principal: 'Crimson Pro', serif;
+  --font-input: 'Ruluko', sans-serif;
+  --font-contatos:'M PLUS Rounded 1c', sans-serif;
 }
 
 * {
@@ -18,6 +20,7 @@
   text-decoration: none;
   list-style: none;
   font-size: 12px;
+  overflow-x: hidden;
 }
 
 

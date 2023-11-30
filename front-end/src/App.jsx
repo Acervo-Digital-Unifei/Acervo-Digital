@@ -1,26 +1,36 @@
-import { BrowserRouter as Router, Routes, Route, Link} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route} from 'react-router-dom'
 import { useState } from 'react'
 
 import Navbar from './components/layouts/Navbar'
 import Footer from './components/layouts/Footer'
-import Container from './components/layouts/Container'
 
 import Home from './components/pages/Home'
 import Login from './components/pages/Login'
 import Livros from './components/pages/Livros'
+import Cadastro from './components/pages/Cadastro'
+import Carrinho from './components/pages/Carrinho'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [lista, setLista] = useState([ {
+    link: "/admin",
+    text: "Admin"
+  },
+   {
+    link: "/cadastrar",
+    text: "Cadastrar"
+  }])
+  
+
   return (
     <Router>
-          <Navbar/>
-            <Container>
+          <Navbar props={lista}/>
               <Routes>
                     <Route exact path="/" element={<Home />} />
                     <Route path="/livros" element={<Livros />} />
                     <Route path="/login" element={<Login />} />
+                    <Route path="/cadastrar" element={<Cadastro />} />
+                    <Route path="/carrinho" element={<Carrinho />} />
               </Routes>
-            </Container>
             <Footer/>
       </Router>
   )

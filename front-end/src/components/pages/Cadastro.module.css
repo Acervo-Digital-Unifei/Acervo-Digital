@@ -1,0 +1,19 @@
+.cadastro {
+    margin: 0 auto;
+}
+.cadastro h2 {
+    text-align: center;
+    font-family: var(--font-principal);
+    color: var(--marrom-principal);
+    margin-top: 80px;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+    border-bottom: 1px solid var(--marrom-principal);
+}
+
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}

@@ -1,0 +1,31 @@
+.carrinho {
+    margin: 0 auto;
+    text-align: center;
+    font-family: var(--font-input);
+}
+
+.carrinho h2 {
+    font-size: 2.5rem;
+    color: var(--input-color);
+    margin: 200px 0 50px 0;
+}
+
+.carrinho p {
+    font-size: 1.5rem;
+    color: var(--bg-sombra);
+    margin-bottom: 2rem;
+}
+
+.carrinho button {
+    padding: 1rem 2rem;
+    border: 1px solid var(--marrom-principal);
+    color: var(--marrom-principal);
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s ease-in-out all;
+}
+.carrinho button:hover {
+    border: 1px solid var(--laranja);
+    color: var(--laranja);
+}

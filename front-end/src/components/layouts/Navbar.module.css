@@ -8,24 +8,25 @@ header {
 }
 
 .navbar {
+    font-family: var(--font-principal);
     display: flex;
     flex-direction: column;
     width: 100vw;
     background-color: #F2ECCE;
     align-items: center;
     justify-content: center;
+    border-bottom: 1px solid var(--marrom-principal) ;
 }
 .list {
     display: flex;
-    flex-direction: row;
+    flex-direction: row;   
 }
 header h1 {
     font-size: 4rem;
     color: var(--marrom-principal);
 }
 .item {
-    
-    margin: 20px;
+    padding: 30px 50px;
     color: var(--marrom-principal);
 }
 
