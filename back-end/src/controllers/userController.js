@@ -8,33 +8,32 @@ import crypto from 'crypto';
 const requestCallbacks = {};
 
 export async function login(req, res) {
-    const {username, password} = req.body;
+    let {email, password} = req.body;
 
-    if(!username || typeof(username) !== 'string' || !password || typeof(password) !== 'string')
-        return res.status(422).json({status: 'error', error: 'Missing username or password field'});
+    if(!email || typeof(email) !== 'string' || !password || typeof(password) !== 'string')
+        return res.status(422).json({status: 'error', error: 'Missing email or password field'});
     
-    // Check the username before querying the DB, so if the username is invalid we don't have to access the database
-    if(!checkUsername(username)) 
-        return res.status(401).json({status: 'error', error: 'Invalid username or password'});
+    email = email.toLocaleLowerCase();
+
+    // Check the email before querying the DB, so if the email is invalid we don't have to access the database
+    if(!checkEmail(email)) 
+        return res.status(401).json({status: 'error', error: 'Invalid email or password'});
 
     let user = null;
 
     try {
         user = await User.findOne(
-            { 'username': {
-                $regex: `^${username}$`,
-                $options: "i"
-            }}
+            email
         ).exec();
     } catch {
         return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
     }
     
-    if(user === null) return res.status(401).json({status: 'error', error: 'Invalid username or password'});
+    if(user === null) return res.status(401).json({status: 'error', error: 'Invalid email or password'});
 
     bcrypt.compare(password, user.passwordCrypt, (err, response) => {
         if(err) return res.status(400).json({status: 'error', error: 'Error checking password'});
-        if(!response) return res.status(401).json({status: 'error', error: 'Invalid username or password'});
+        if(!response) return res.status(401).json({status: 'error', error: 'Invalid email or password'});
         
         const token = 'Bearer ' + jwt.sign({
             userId: user._id,
