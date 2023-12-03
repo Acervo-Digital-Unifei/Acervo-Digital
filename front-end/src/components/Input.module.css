@@ -1,5 +1,5 @@
 .input {
-    margin-bottom: 8rem;
+    margin-bottom: 4rem;
 }
 .input input {
     width: 400px;
@@ -10,5 +10,17 @@
     color: var(--marrom-principal);
     text-align: left;
     border-radius: 5px;
+    
 }
 
+.inputBusca input{
+    width: 1000px;
+    height: 20px;
+    padding: 10px;
+    border-radius: 39px;
+    background-color: var(--bg-color);
+    color: var(--marrom-principal);
+    text-align: left;
+    border: 1px solid var(--marrom-principal);
+
+}

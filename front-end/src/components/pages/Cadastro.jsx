@@ -12,6 +12,7 @@ export default function Cadastro() {
                     <Input name="name" type="text" placeholder="Digite o seu nome"/>
                     <Input name="email" type="email" placeholder="email@example.com" />
                     <Input name="senha" type="password" placeholder="Senha"/>
+                    <Input name="confirmaSenha" type="password" placeholder="Confirma Senha"/>
                     <ButtonSubmit text="CRIAR CONTA"/>
                 </form>
             </section>

@@ -11,10 +11,15 @@ footer {
     border-top: 1px solid var(--marrom-principal);
 }
 
-footer p {
+footer a {
     font-family: var(--font-contatos);
     font-weight: bold;
     font-size: 2rem;
     color: #FFF;
     text-transform: uppercase;
+    transition: 0.2s all ease-in-out;
+}
+
+footer a:hover{
+    border-bottom: 2px solid var(--marrom-principal);
 }

@@ -1,10 +1,14 @@
 import styles from './Footer.module.css'
+import { Link } from 'react-router-dom'
+
+
 export default function Footer(){
     return (
         <footer className={styles.footer}>
-            <p>Contatos</p>
-            <p>Dúvidas</p>
-            <p>Sobre Nós</p>
+
+            <Link to ="/contato" >Contate-nos</Link>
+            <Link to ="/cadastrar" >Sobre nós</Link>
+
         </footer>
     )
 }

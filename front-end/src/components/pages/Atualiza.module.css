@@ -1,7 +1,8 @@
-.login {
+.atualiza {
     margin: 0 auto;
+
 }
-.login h2 {
+.atualiza h2 {
     text-align: center;
     font-family: var(--font-principal);
     color: var(--marrom-principal);
@@ -16,19 +17,4 @@ form {
     display: flex;
     flex-direction: column;
     
-}
-
-.login_necessidades{
-    text-align: center;
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 30px;
-    
-    
-}
-.login_necessidades a{
-    font-family: var(--font-principal);
-    color: var(--marrom-principal);
-    font-size: 1.2rem;
-
 }
