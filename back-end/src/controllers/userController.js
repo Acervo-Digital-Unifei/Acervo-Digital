@@ -2,6 +2,10 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { checkEmail, checkUsername } from '../utils/sanitizer.js';
+import { sendEmail } from '../utils/email.js'
+import crypto from 'crypto';
+
+const requestCallbacks = {};
 
 export async function login(req, res) {
     const {username, password} = req.body;
@@ -42,8 +46,6 @@ export async function login(req, res) {
             'status': 'ok'
         });
     });
-
-
 }
 
 export async function register(req, res) {
@@ -72,21 +74,39 @@ export async function register(req, res) {
         if(user !== null)
             return res.status(400).json({status: 'error', error: `${user.email === email ? 'Email' : 'Username'} already registered`});
 
-        try {
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(password, salt);
-            
-            User.create({
-                username,
-                email,
-                passwordCrypt: hash
-            }).then(() => res.status(200).json({
-                status: 'ok'
-            })).catch(() => res.status(400).json({status: 'error', error: 'Error storing the user'}));
+        const code = crypto.randomBytes(64).toString('hex');
+        const link = `${process.env.FRONTEND_CONFIRM_EMAIL_URL}?code=${code}`;
 
-        } catch {
-            res.status(400).json({status: 'error', error: 'Error hashing the password'});
+        sendEmail({
+            to: email,
+            subject: 'Confirmação de Cadastro',
+            html: `<b>Se você não solicitou um cadastro na livraria Acervo Digital, ignore este email.<b>
+            <br>
+            <b>Clique neste link para confirmar seu cadastro: </b> <a href="${link}">${link}</a>`
+        });
+
+        requestCallbacks[code] = async (req, res) => {
+            try {
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(password, salt);
+                
+                User.create({
+                    username,
+                    email,
+                    passwordCrypt: hash
+                }).then(() => res.status(200).json({
+                    status: 'ok'
+                })).catch(() => res.status(400).json({status: 'error', error: 'Error storing the user'}));
+    
+            } catch {
+                return res.status(400).json({status: 'error', error: 'Error hashing the password'});
+            }
+            requestCallbacks[code] = undefined;
         }
+
+        // Code will expires in 10 minutes
+        setTimeout(() => requestCallbacks[code] = undefined, 60000 * 10);
+        return res.status(200).json({status: 'ok', message: 'Confirm your email'});
     });
 }
 
@@ -139,12 +159,7 @@ export function get(req, res) {
     .catch(() => res.status(400).json({status: 'error', error: 'Error loading the user'}));
 }
 
-export async function changePassword(req, res) {
-    const { oldPassword, newPassword } = req.body;
-
-    if((!oldPassword || typeof(oldPassword) !== 'string') || (!newPassword || typeof(newPassword) !== 'string')) 
-        return res.status(422).json({status: 'error', error: 'Missing field oldPassword or newPassword'});
-
+export async function requestChangeEmail(req, res) {
     let user = null;
 
     try {
@@ -152,34 +167,82 @@ export async function changePassword(req, res) {
     } catch {
         return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
     }
-    
-    if(user === null) return res.status(401).json({status: 'error', error: 'User does not exist'});
 
-    bcrypt.compare(oldPassword, user.passwordCrypt, async (err, response) => {
-        if(err) return res.status(400).json({status: 'error', error: 'Error checking old password'});
-        if(!response) return res.status(401).json({status: 'error', error: 'Old password is wrong'});
-        
-        try {
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(newPassword, salt);
-            
-            user.passwordCrypt = hash;
-            await user.save();
-        } catch {
-            res.status(400).json({status: 'error', error: 'Error hashing the new password'});
-        }
+    let code = crypto.randomBytes(64).toString('hex');
+    let link = `${process.env.FRONTEND_CHANGE_EMAIL_URL}?code=${code}`;
+    const userId = user._id;
 
-        return res.status(200).json({
-            'status': 'ok'
-        });
+    sendEmail({
+        to: user.email,
+        subject: 'Requisição de alteração de endereço de email',
+        html: `<b>Se você não solicitou uma alteração de endereço de email, ignore este email.<b>
+        <br>
+        <b>Clique neste link para alterar seu endereço de email: </b> <a href="${link}">${link}</a>`
     });
+    requestCallbacks[code] = async (req, res) => {
+        let { email } = req.body;
+
+        if(!email || typeof(email) !== 'string')
+            return res.status(422).json({status: 'error', error: 'Missing field email'});
+        
+        email = email.toLocaleLowerCase();
+        
+        if(!checkEmail(email))
+            return res.status(400).json({status: 'error', error: 'Invalid email format'});
+
+
+        requestCallbacks[code] = undefined;
+
+        code = crypto.randomBytes(64).toString('hex');
+        link = `${process.env.FRONTEND_CONFIRM_EMAIL_URL}?code=${code}`;
+        sendEmail({
+            to: email,
+            subject: 'Confirmação de Email',
+            html: `<b>Se você não solicitou uma alteração para este endereço de email, ignore este email.<b>
+            <br>
+            <b>Clique neste link para alterar seu endereço de email: </b> <a href="${link}">${link}</a>`
+        });
+        // Code will expires in 10 minutes
+        setTimeout(() => requestCallbacks[code] = undefined, 60000 * 10);
+
+        requestCallbacks[code] = async (req, res) => {
+            try {
+                user = await User.findById(userId).exec();
+            } catch {
+                return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
+            }
+    
+            if(user === null)
+                return res.status(400).json({status: 'error', error: 'Error finding user'});
+    
+            try {
+                user.email = email;
+                await user.save();
+            } catch {
+                return res.status(400).json({status: 'error', error: 'Error hashing or saving the password'});
+            }
+            
+            requestCallbacks[code] = undefined;
+            return res.status(200).json({status: 'ok'});
+        }
+        
+        return res.status(200).json({ status: 'ok' });
+    }
+
+    // Code will expires in 10 minutes
+    setTimeout(() => requestCallbacks[code] = undefined, 60000 * 10);
+
+    if(user === null) return res.status(400).json({status: 'error', error: 'User not found'});
+    return res.status(200).json({status: 'ok'})
 }
 
-export async function changeEmail(req, res) {
-    const { password, email } = req.body;
+export async function requestChangePassword(req, res) {
+    let email = req.body.email;
 
-    if((!password || typeof(password) !== 'string') || (!email || typeof(email) !== 'string')) 
-        return res.status(422).json({status: 'error', error: 'Missing field password or email'});
+    if((!email || typeof(email) !== 'string')) 
+        return res.status(422).json({status: 'error', error: 'Missing field email'});
+
+    email = email.toLocaleLowerCase();
 
     if(!checkEmail(email))
         return res.status(400).json({status: 'error', error: 'Invalid email format'});
@@ -187,26 +250,74 @@ export async function changeEmail(req, res) {
     let user = null;
 
     try {
-        user = await User.findById(req.userId).exec();
+        user = await User.findOne({
+            email
+        }).exec();
     } catch {
         return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
     }
-    
-    if(user === null) return res.status(401).json({status: 'error', error: 'User does not exist'});
 
-    bcrypt.compare(password, user.passwordCrypt, async (err, response) => {
-        if(err) return res.status(400).json({status: 'error', error: 'Error checking password'});
-        if(!response) return res.status(401).json({status: 'error', error: 'Password is wrong'});
-        
-        try {
-            user.email = email;
-            await user.save();
-        } catch {
-            res.status(400).json({status: 'error', error: 'Error updating email'});
+    if(user !== null) {
+        const code = crypto.randomBytes(64).toString('hex');
+        const link = `${process.env.FRONTEND_CHANGE_PASSWORD_URL}?code=${code}`;
+        const userId = user._id;
+        sendEmail({
+            to: email,
+            subject: 'Requisição de alteração de senha',
+            html: `<b>Se você não solicitou uma alteração de senha, ignore este email.<b>
+            <br>
+            <b>Clique neste link para alterar sua senha: </b> <a href="${link}">${link}</a>`
+        });
+        requestCallbacks[code] = async (req, res) => {
+            const { password } = req.body;
+
+            if(!password || typeof(password) !== 'string')
+                return res.status(422).json({status: 'error', error: 'Missing field password'});
+            
+            let user = null;
+            try {
+                user = await User.findById(userId).exec();
+            } catch(e) {
+                return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
+            }
+
+            if(user === null)
+                return res.status(400).json({status: 'error', error: 'Error finding user'});
+
+            try {
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(password, salt);
+                user.passwordCrypt = hash;
+                await user.save();
+            } catch {
+                return res.status(400).json({status: 'error', error: 'Error hashing or saving the password'});
+            }
+
+            requestCallbacks[code] = undefined;
+            return res.status(200).json({ status: 'ok' });
         }
 
-        return res.status(200).json({
-            'status': 'ok'
-        });
-    });
+        // Code will expires in 10 minutes
+        setTimeout(() => requestCallbacks[code] = undefined, 60000 * 10);
+    }
+
+    return res.status(200).json({status: 'ok', error: 'If there is an user with this email address, we have sent an confirmation request'});
+}
+
+export async function requestCodeExists(req, res) {
+    const { code } = req.query;
+    if(!code || typeof(code) !== 'string') 
+        return res.status(422).send({status: 'error', error: 'Missing field code'});
+
+    return res.status(200).send({status: 'ok', response: requestCallbacks[code] !== undefined});
+}
+
+export async function confirmRequest(req, res) {
+    const { code } = req.body;
+    if(!code || typeof(code) !== 'string') 
+        return res.status(422).send({status: 'error', error: 'Missing field code'});
+    
+    if(requestCallbacks[code] === undefined) 
+        return res.status(400).send({status: 'error', error: 'Code is invalid or expired'});
+    return requestCallbacks[code](req, res);
 }
