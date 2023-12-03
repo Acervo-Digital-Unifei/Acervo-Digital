@@ -4,7 +4,7 @@ import User from '../models/User.js';
 import { checkEmail, checkUsername } from '../utils/sanitizer.js';
 
 export async function login(req, res) {
-    const {username, password} = req.body
+    const {username, password} = req.body;
 
     if(!username || typeof(username) !== 'string' || !password || typeof(password) !== 'string')
         return res.status(422).json({status: 'error', error: 'Missing username or password field'});
@@ -41,13 +41,13 @@ export async function login(req, res) {
         return res.status(200).header('Authorization', token).json({
             'status': 'ok'
         });
-    })
+    });
 
 
 }
 
 export async function register(req, res) {
-    let { username, password, email } = req.body
+    let { username, password, email } = req.body;
     
     if(!username || typeof(username) !== 'string' || !password || typeof(password) !== 'string' || !email || typeof(email) !== 'string')
         return res.status(422).json({status: 'error', error: 'Missing username, password or email field'});
@@ -137,4 +137,76 @@ export function get(req, res) {
         }});
     })
     .catch(() => res.status(400).json({status: 'error', error: 'Error loading the user'}));
+}
+
+export async function changePassword(req, res) {
+    const { oldPassword, newPassword } = req.body;
+
+    if((!oldPassword || typeof(oldPassword) !== 'string') || (!newPassword || typeof(newPassword) !== 'string')) 
+        return res.status(422).json({status: 'error', error: 'Missing field oldPassword or newPassword'});
+
+    let user = null;
+
+    try {
+        user = await User.findById(req.userId).exec();
+    } catch {
+        return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
+    }
+    
+    if(user === null) return res.status(401).json({status: 'error', error: 'User does not exist'});
+
+    bcrypt.compare(oldPassword, user.passwordCrypt, async (err, response) => {
+        if(err) return res.status(400).json({status: 'error', error: 'Error checking old password'});
+        if(!response) return res.status(401).json({status: 'error', error: 'Old password is wrong'});
+        
+        try {
+            const salt = await bcrypt.genSalt(10);
+            const hash = await bcrypt.hash(newPassword, salt);
+            
+            user.passwordCrypt = hash;
+            await user.save();
+        } catch {
+            res.status(400).json({status: 'error', error: 'Error hashing the new password'});
+        }
+
+        return res.status(200).json({
+            'status': 'ok'
+        });
+    });
+}
+
+export async function changeEmail(req, res) {
+    const { password, email } = req.body;
+
+    if((!password || typeof(password) !== 'string') || (!email || typeof(email) !== 'string')) 
+        return res.status(422).json({status: 'error', error: 'Missing field password or email'});
+
+    if(!checkEmail(email))
+        return res.status(400).json({status: 'error', error: 'Invalid email format'});
+
+    let user = null;
+
+    try {
+        user = await User.findById(req.userId).exec();
+    } catch {
+        return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
+    }
+    
+    if(user === null) return res.status(401).json({status: 'error', error: 'User does not exist'});
+
+    bcrypt.compare(password, user.passwordCrypt, async (err, response) => {
+        if(err) return res.status(400).json({status: 'error', error: 'Error checking password'});
+        if(!response) return res.status(401).json({status: 'error', error: 'Password is wrong'});
+        
+        try {
+            user.email = email;
+            await user.save();
+        } catch {
+            res.status(400).json({status: 'error', error: 'Error updating email'});
+        }
+
+        return res.status(200).json({
+            'status': 'ok'
+        });
+    });
 }
