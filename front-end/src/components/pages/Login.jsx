@@ -59,7 +59,6 @@ export default function Login() {
             navigate('/');
             
         } catch(e) {
-            console.log(e)
             const response = e?.response;
             if(response?.status === 401) return alert(`Email ou senha inválido(s)! Caso tenha cadastrado agora, não se esqueça de confirmar seu email para validar o cadastro.`)
 
@@ -78,8 +77,8 @@ export default function Login() {
                     <ButtonSubmit text="ENTRAR"/>
                 </form>
                 <div className={styles.login_necessidades}>
-                    <Link to ="/atualizaemail" >Atualizar seu email?</Link>
-                    <Link to ="/trocasenha" >Não lembra sua senha ?</Link>
+                    <Link to ="/requisicaoalteraremail" >Atualizar seu email?</Link>
+                    <Link to ="/requisicaoalterarsenha" >Não lembra sua senha?</Link>
                     <Link to ="/cadastrar" >Cadastre-se</Link>
                 </div>
             </section>

@@ -10,10 +10,12 @@ import Login from './components/pages/Login'
 import Livros from './components/pages/Livros'
 import Cadastro from './components/pages/Cadastro'
 import Carrinho from './components/pages/Carrinho'
-import Atualiza from './components/pages/Atualiza'
-import TrocaSenha from './components/pages/TrocaSenha'
+import RequisitarAlteracaoDeSenha from './components/pages/RequisitarAlteracaoDeSenha'
 import Contato from './components/pages/Contato'
 import ConfirmarEmail from './components/pages/ConfirmarEmail'
+import AlterarSenha  from './components/pages/AlterarSenha'
+import AlterarEmail from './components/pages/AlterarEmail'
+import RequisitarAlteracaoDeEmail from './components/pages/RequisitarAlteracaoDeEmail'
 
 export const UserContext = React.createContext(null);
 
@@ -65,8 +67,10 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/cadastrar" element={<Cadastro />} />
               <Route path="/carrinho" element={<Carrinho />} />   
-              <Route path="/atualizaemail" element={<Atualiza />} />  
-              <Route path="/trocasenha" element={<TrocaSenha />} />   
+              <Route path="/alteraremail" element={<AlterarEmail />} />  
+              <Route path="/alterarsenha" element={<AlterarSenha />} />  
+              <Route path="/requisicaoalteraremail" element={<RequisitarAlteracaoDeEmail />} />  
+              <Route path="/requisicaoalterarsenha" element={<RequisitarAlteracaoDeSenha />}/> 
               <Route path="/contato" element={<Contato />} />        
               <Route path="/confirmaremail" element={<ConfirmarEmail />} />        
           </Routes>

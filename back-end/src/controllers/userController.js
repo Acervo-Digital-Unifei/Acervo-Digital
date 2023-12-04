@@ -179,6 +179,8 @@ export async function requestChangeEmail(req, res) {
         return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
     }
 
+    
+
     let code = crypto.randomBytes(64).toString('hex');
     let link = `${process.env.FRONTEND_CHANGE_EMAIL_URL}?code=${code}`;
     const userId = user._id;
@@ -201,9 +203,20 @@ export async function requestChangeEmail(req, res) {
         if(!checkEmail(email))
             return res.status(400).json({status: 'error', error: 'Invalid email format'});
 
+        try {
+            const exists = await User.exists({
+                email
+            });
+            
+            if(exists) {
+                return res.status(400).json({status: 'error', error: 'Email already registered'});
+            }
+        } catch {
+            return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
+        }
+
 
         requestCallbacks[code] = undefined;
-
         code = crypto.randomBytes(64).toString('hex');
         link = `${process.env.FRONTEND_CONFIRM_EMAIL_URL}?code=${code}`;
         sendEmail({

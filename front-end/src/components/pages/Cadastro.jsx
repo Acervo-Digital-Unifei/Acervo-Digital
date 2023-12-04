@@ -58,7 +58,7 @@ export default function Cadastro() {
             clearFields();
         } catch(e) {
             const response = e?.response;
-            console.log(e)
+            
             if(response?.data?.error !== undefined) {
                 if(response.data.error === 'Email already registered') alert(`Email "${email.toLocaleLowerCase()}" já cadastrado`);
                 else if(response.data.error === 'Username already registered') alert(`Já existe alguém cadastrado com o nome "${name}"`);

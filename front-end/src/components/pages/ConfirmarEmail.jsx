@@ -48,9 +48,16 @@ export default function ConfirmarEmail() {
                         email: content.email,
                         privilege: content.privilege
                     });
+                    alert('Conta cadastrada com sucesso!');
+                    navigate('/');
+                    return;
                 }
-
-                alert('Email confirmado com sucesso!');
+                 
+                alert('Email alterado com sucesso, logue novamente com o novo email!');
+                try {sessionStorage.removeItem('token');} catch{} // I don't know if this function throws something
+                setUser(null);
+                navigate('/');
+                return;
             } catch(e) {
                 const response = e?.response;
                 if(response?.status === 400) alert('Código de confirmação expirado');
