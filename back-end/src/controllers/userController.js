@@ -13,7 +13,7 @@ export async function login(req, res) {
     if(!email || typeof(email) !== 'string' || !password || typeof(password) !== 'string')
         return res.status(422).json({status: 'error', error: 'Missing email or password field'});
     
-    email = email.toLocaleLowerCase();
+    email = email.toLocaleLowerCase().trim();
 
     // Check the email before querying the DB, so if the email is invalid we don't have to access the database
     if(!checkEmail(email)) 
@@ -53,7 +53,8 @@ export async function register(req, res) {
     if(!username || typeof(username) !== 'string' || !password || typeof(password) !== 'string' || !email || typeof(email) !== 'string')
         return res.status(422).json({status: 'error', error: 'Missing username, password or email field'});
 
-    email = email.toLowerCase();
+    email = email.toLowerCase().trim();
+    username = username.trim();
 
     if(!checkEmail(email))
         return res.status(400).json({status: 'error', error: 'Invalid email format'});
@@ -132,13 +133,13 @@ export function get(req, res) {
     const query = [];
     if(username) {
         query.push({ 'username': {
-            $regex: `^${username}$`,
+            $regex: `^${username.trim()}$`,
             $options: "i"
         }});
     }
 
     if(email)
-        query.push({ 'email': email.toLowerCase() });
+        query.push({ 'email': email.toLowerCase().trim() });
 
     if(id)
         query.push({ '_id': id });
@@ -184,7 +185,7 @@ export async function requestChangeEmail(req, res) {
         if(!email || typeof(email) !== 'string')
             return res.status(422).json({status: 'error', error: 'Missing field email'});
         
-        email = email.toLocaleLowerCase();
+        email = email.toLocaleLowerCase().trim();
         
         if(!checkEmail(email))
             return res.status(400).json({status: 'error', error: 'Invalid email format'});
@@ -241,7 +242,7 @@ export async function requestChangePassword(req, res) {
     if((!email || typeof(email) !== 'string')) 
         return res.status(422).json({status: 'error', error: 'Missing field email'});
 
-    email = email.toLocaleLowerCase();
+    email = email.toLocaleLowerCase().trim();
 
     if(!checkEmail(email))
         return res.status(400).json({status: 'error', error: 'Invalid email format'});

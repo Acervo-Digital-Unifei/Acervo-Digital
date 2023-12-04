@@ -7,7 +7,7 @@ export function checkEmail(email) {
 };
 
 export function checkUsername(username) {
-    return (typeof(username === 'string' && username.length <= 30)) && String(username)
+    return (typeof(username === 'string' && username.length <= 70)) && String(username)
         .toLowerCase()
-        .match(/^[a-zA-Z0-9\_]+$/);
+        .match(/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g);
 };
