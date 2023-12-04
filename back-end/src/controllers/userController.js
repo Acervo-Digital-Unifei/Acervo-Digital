@@ -22,10 +22,10 @@ export async function login(req, res) {
     let user = null;
 
     try {
-        user = await User.findOne(
+        user = await User.findOne({
             email
-        ).exec();
-    } catch {
+        }).exec();
+    } catch(e) {
         return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
     }
     
@@ -38,10 +38,11 @@ export async function login(req, res) {
         const token = 'Bearer ' + jwt.sign({
             userId: user._id,
             username: user.username,
+            email: user.email,
             privilege: user.privilege
         }, process.env.JWT_SECRET, {expiresIn: '1d'});
 
-        return res.status(200).header('Authorization', token).json({
+        return res.status(200).header('Authorization', token).header('Access-Control-Expose-Headers', 'Authorization').json({
             'status': 'ok'
         });
     });
@@ -94,9 +95,19 @@ export async function register(req, res) {
                     username,
                     email,
                     passwordCrypt: hash
-                }).then(() => res.status(200).json({
-                    status: 'ok'
-                })).catch(() => res.status(400).json({status: 'error', error: 'Error storing the user'}));
+                }).then((user) => {
+                    const token = 'Bearer ' + jwt.sign({
+                        userId: user._id,
+                        username: user.username,
+                        email: user.email,
+                        privilege: user.privilege
+                    }, process.env.JWT_SECRET, {expiresIn: '1d'});
+            
+                    return res.status(200).header('Authorization', token).header('Access-Control-Expose-Headers', 'Authorization').json({
+                        status: 'ok'
+                    });
+
+                }).catch(() => res.status(400).json({status: 'error', error: 'Error storing the user'}));
     
             } catch {
                 return res.status(400).json({status: 'error', error: 'Error hashing the password'});

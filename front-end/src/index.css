@@ -28,3 +28,7 @@ h1 {
   font-family: var(--font-principal);
 }
 
+label {
+  font-family: var(--font-principal);
+}
+
