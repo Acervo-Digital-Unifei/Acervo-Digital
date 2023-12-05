@@ -11,6 +11,7 @@ export default function Input({type, name, placeholder,customClass, value, onCha
                 id={name} 
                 value={value}
                 onChange={onChange}
+                
             />
         </div>
     )

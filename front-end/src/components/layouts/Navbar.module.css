@@ -24,6 +24,7 @@ header {
 header h1 {
     font-size: 4rem;
     color: var(--marrom-principal);
+    text-shadow: 2px 1px 2px black;
 }
 .item {
     padding: 30px 50px;

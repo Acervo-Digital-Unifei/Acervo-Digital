@@ -15,6 +15,11 @@
     background-color: #8C513B;
     color: white; 
   }
+
+.marginless {
+    margin: 0px;
+    padding: .5rem 3rem;
+}
 /*
 .buttonSubmit:hover {
     animation: bubble 0.4s ease-out;
