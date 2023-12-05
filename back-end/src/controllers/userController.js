@@ -179,7 +179,6 @@ export async function requestChangeEmail(req, res) {
         return res.status(400).json({status: 'error', error: 'Error connecting to the database'});
     }
 
-    
 
     let code = crypto.randomBytes(64).toString('hex');
     let link = `${process.env.FRONTEND_CHANGE_EMAIL_URL}?code=${code}`;

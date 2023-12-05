@@ -5,10 +5,7 @@ const Book = model('Book', new Schema({
     author: {type: String, required: true},
     publisher: {type: String, required: true},
     ISBN: {type: String, default: null},
-    thumbnail: {
-        data: Buffer,
-        contentType: String
-    },
+    thumbnail: {type: String, default: null},
     price: {type: Number, required: true},
 }), 'books');
 
