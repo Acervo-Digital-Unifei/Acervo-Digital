@@ -16,20 +16,19 @@ import ConfirmarEmail from './components/pages/ConfirmarEmail'
 import AlterarSenha  from './components/pages/AlterarSenha'
 import AlterarEmail from './components/pages/AlterarEmail'
 import RequisitarAlteracaoDeEmail from './components/pages/RequisitarAlteracaoDeEmail'
+import AtualizarLivro from './components/pages/AtualizarLivro'
 
 export const UserContext = React.createContext(null);
 
 
+
 function App() {
-  const [lista, setLista] = useState([ {
-    link: "/admin",
-    text: "Admin"
-    
-  },
+  const [lista, setLista] = useState([
    {
     link: "/cadastrar",
     text: "Cadastrar"
   }])
+  
   
   const [user, setUser] = useState(null);
   
@@ -48,6 +47,7 @@ function App() {
         email: content.email,
         privilege: content.privilege
       });
+      lista.pop()
     }
     
   }, []);
@@ -72,10 +72,13 @@ function App() {
               <Route path="/requisicaoalteraremail" element={<RequisitarAlteracaoDeEmail />} />  
               <Route path="/requisicaoalterarsenha" element={<RequisitarAlteracaoDeSenha />}/> 
               <Route path="/contato" element={<Contato />} />        
-              <Route path="/confirmaremail" element={<ConfirmarEmail />} />        
+              <Route path="/confirmaremail" element={<ConfirmarEmail />} />
+              <Route path="/atualizarlivro" element={<AtualizarLivro />} />
+                      
           </Routes>
           <Footer/>
         </UserContext.Provider> 
+        
       </Router>
   )
 }
