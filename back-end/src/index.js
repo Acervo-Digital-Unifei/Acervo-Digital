@@ -46,6 +46,7 @@ await setupEmailTransporter({
 // Setup express routes and start the server
 import usersRoute from './routes/userRoute.js';
 import booksRoute from './routes/booksRoute.js';
+import purchaseRoute from './routes/purchaseRoute.js';
 
 const app = express();
 app.use(express.json());
@@ -54,5 +55,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/user', usersRoute);
 app.use('/book', booksRoute);
+app.use('/purchase', purchaseRoute);
 
 app.listen(process.env.SERVER_PORT, () => console.log(`Listening on port ${process.env.SERVER_PORT || 3000}`));

@@ -22,7 +22,8 @@ export function isAuthenticatedAsAdmin(req, res, next) {
         }).then((user) => {
             if(!user) return res.status(403).json({status: 'error', error: 'This token is no longer valid'});
             req.userId = result.userId;
-            req.username = result.username;
+            req.username = user.username;
+            req.email = user.email;
             req.privilege = 'admin';
             next();
         }).catch(err => res.status(400).json({status: 'error', error: 'Error accessing database'}))
@@ -42,6 +43,7 @@ export function isAuthenticated(req, res, next) {
         req.userId = result.userId;
         req.username = result.username;
         req.privilege = result.privilege;
+        req.email = result.email;
         return next();
     });
 }
