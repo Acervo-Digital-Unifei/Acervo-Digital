@@ -13,5 +13,17 @@
 .profileclass p {
     font-size: 1.5rem;
     color: var(--marrom-principal);
-    margin-bottom: 2rem;
+}
+
+.profileclass a {
+    margin: 0 10px 2rem 0;
+}
+
+.profileclass button {
+    padding: 5px 10px;
+    border-radius: 4px;
+    color: #FFF;
+    background-color: var(--marrom-principal);
+    border: none;
+    cursor: pointer;
 }
