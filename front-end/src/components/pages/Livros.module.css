@@ -4,9 +4,17 @@
     text-align: center;
     margin: auto;
 }
-.testeh1{
-    border: 1px solid black;
-    width: 1000px;
-    height: 400px;
-    background-color: black;
-}
+/* Adapte conforme necessário */
+.livros_lista {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .livro_item {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px;
+    width: 200px; /* Ajuste conforme necessário */
+  }
+  

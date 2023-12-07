@@ -1,0 +1,17 @@
+.profileclass {
+    margin: 0 auto;
+    text-align: center;
+    font-family: var(--font-input);
+}
+
+.profileclass h2 {
+    font-size: 2.5rem;
+    color: var(--input-color);
+    margin: 200px 0 50px 0;
+}
+
+.profileclass p {
+    font-size: 1.5rem;
+    color: var(--marrom-principal);
+    margin-bottom: 2rem;
+}

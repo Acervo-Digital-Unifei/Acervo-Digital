@@ -7,7 +7,7 @@ export default function Footer(){
         <footer className={styles.footer}>
 
             <Link to ="/contato" >Contate-nos</Link>
-            <Link to ="/cadastrar" >Sobre nós</Link>
+            <Link to ="/sobrenos" >Sobre nós</Link>
 
         </footer>
     )

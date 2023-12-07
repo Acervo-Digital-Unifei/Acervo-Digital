@@ -2,8 +2,17 @@ import Container from '../layouts/Container'
 import styles from "./Livros.module.css"
 import Input from '../Input'
 import ButtonSubmit from '../ButtonSubmit'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+
 
 export default function Livros() {
+
+const [book,setBook] = useState({})
+
+   
+    console.log(book, "livro do console");
+
     return( 
         <Container customClass='backgroundStandart'>
             <section className={styles.livros_busca}>
