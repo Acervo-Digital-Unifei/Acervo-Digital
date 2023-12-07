@@ -27,16 +27,23 @@ export default function Navbar({props}) {
             </header>
             <ul className={styles.list}>
                 <li className={styles.item}>
-                    <Link to='/livros'>Livros</Link>
-                </li>
-                <li className={styles.item}>
                     <Link to='/'>Home</Link>
                 </li>
-                {props && props.map((item) => (
                 <li className={styles.item}>
-                    <Link to={item.link}>{item.text}</Link>
+                    <Link to='/livros'>Livros</Link>
                 </li>
-                ))}
+                {
+                    user === null ? 
+                    (<li className={styles.item}>
+                        <Link to='/cadastrar'>Cadastrar</Link>
+                    </li>) : (<></>)
+                }
+                {
+                    (user !== null && user.privilege === 'admin') ? 
+                    (<li className={styles.item}>
+                        <Link to='/cadastrarlivro'>Cadastrar Livro</Link>
+                    </li>) : (<></>)
+                }
             </ul>
         </nav>
     )

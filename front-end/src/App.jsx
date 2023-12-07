@@ -24,39 +24,13 @@ import CadastrarLivro from './components/pages/CadastrarLivro'
 
 export const UserContext = React.createContext(null);
 
-function App() {
-  const [lista, setLista] = useState([
-   {
-    link: "/cadastrar",
-    text: "Cadastrar"
-  }])
-  
-  
+function App() {  
   const [user, setUser] = useState(() => {
     const token = sessionStorage.getItem('token');
     if(token)
       return jwtDecode(token.split(' ')[1]);
     return null;
-  });
-  
-  useEffect(() => {
-    if (user) {
-      setLista(prevLista => prevLista.slice(0, -1)); 
-    } else {
-      setLista([
-        {
-          link: "/cadastrar",
-          text: "Cadastrar"
-        }
-      ]);
-    }
-  }, [user]);
-  
-
-  // On loggedIn/loggedOut
-  useEffect(() => {
-    console.log('User changed to ' + user)
-  }, [user]);
+  });  
 
   return (
     <Router>
@@ -79,12 +53,9 @@ function App() {
               <Route path="/sobrenos" element={<SobreNos />} />
               <Route path="/cadastrarlivro" element={<CadastrarLivro />} />
               <Route path="/atualizarlivro/:id" element={<AtualizarLivro />} />
-              
-                      
           </Routes>
           <Footer/>
         </UserContext.Provider> 
-        
       </Router>
   )
 }
