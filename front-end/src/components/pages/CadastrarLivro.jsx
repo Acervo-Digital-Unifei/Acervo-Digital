@@ -137,13 +137,11 @@ export default function CadastrarLivro() {
         try {
             const result = await axios.post(Constants.BOOK_ADD_API_POST_URL, dadosLivro);
             const id = result.data.id;
-            toast.successc('Livro cadastrado com sucesso!');
+            toast.success('Livro cadastrado com sucesso!');
             navigate(`/livro/${id}`);
         } catch(e) {
             const result = e.response;
 
-            if(!result)
-                return toast.error('Erro de conexão com o servidor!');
             if(result.status === 400) 
                 return toast.error('Erro ao cadastrar livro!');
             if(result.status === 422)
