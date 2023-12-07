@@ -16,3 +16,5 @@ export const BOOK_UPDATE_API_POST_URL = BOOK_API_URL + '/update';
 export const BOOK_DELETE_API_DELETE_URL = BOOK_API_URL + '/';
 export const BOOK_GET_BOOKS_API_GET_URL = BOOK_API_URL + '/';
 export const BOOK_GET_BOOK_BY_ID_API_GET_URL = BOOK_API_URL + '/byid';
+
+export const PURCHASE_CONFIRM_API_POST_URL = BASE_API_URL + '/purchase/confirm' 

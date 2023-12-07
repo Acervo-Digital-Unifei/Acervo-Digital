@@ -4,6 +4,12 @@
     font-family: var(--font-input);
 }
 
+.botaoCarrinho {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
 .carrinho h2 {
     font-size: 2.5rem;
     color: var(--input-color);

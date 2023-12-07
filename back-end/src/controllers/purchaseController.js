@@ -35,7 +35,7 @@ export async function confirmPurchase(req, res) {
     const html = 
     `
     <html>
-    <b>Detalhe da compra realizada na livraria Acervo Digital no dia ${purchaseDate.toLocaleDateString('pt-br')} às ${purchaseDate.getHours()}:${purchaseDate.getMinutes()}, no valor de ${totalPrice.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}: </b>
+    <b>Detalhe da compra realizada na livraria Acervo Digital no dia ${purchaseDate.toLocaleDateString('pt-br')} às ${("00" + purchaseDate.getHours()).slice(-2)}:${("00" + purchaseDate.getMinutes()).slice(-2)}, no valor de ${totalPrice.toLocaleString('pt-br',{style: 'currency', currency: 'BRL'})}: </b>
     <br>
     <table width="600" style="border:1px solid #333">
         <tr>
