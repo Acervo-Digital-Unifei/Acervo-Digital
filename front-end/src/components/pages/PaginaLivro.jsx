@@ -4,10 +4,15 @@ import Input from "../Input";
 import Button from "../Button";
 import { UserContext } from "../../App";
 import { useState } from "react";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import {useContext} from "react";
 
 export default function PaginaLivro() {
     
+  
+    const Navigate = useNavigate();
+
     const [nome, setNome] = useState("");
     const [preco, setPreco] = useState("");
     const [editora, setEditora] = useState("");
@@ -15,15 +20,24 @@ export default function PaginaLivro() {
     
     const { user, setUser } = useContext(UserContext);
     
-    const buttonAdicionar = ()=>{
-        Navigate("/carrinho");
-    }
-    const buttonAtualizar = ()=>{
-        if(user.privilege){
-            Navigate("/atualizarlivro");}
-        else{alert("Você não tem permissao pra isso!")};
-        
-    }
+    const addCarrinho = async (e) => {
+        e.preventDefault();
+        if (user !== null) {
+          Navigate("/carrinho");
+        } else {
+          toast.error("Você precisa estar logado!!");
+        }
+      };
+      
+      const goToAtualiza = (e) => {
+        e.preventDefault();
+        if (user !== null && user.privilege === 'admin') {
+          Navigate("/atualizarlivro/");
+        } else {
+          toast.error("Você não tem permissão para isso!");
+        }
+      };
+
     return (
     <Container customClass='backgroundStandart'>
         <section className={styles.atualiza}>
