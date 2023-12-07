@@ -8,6 +8,7 @@ import axios from 'axios'
 import * as Constants from '../../constants'
 import { UserContext } from '../../App'
 import { jwtDecode } from 'jwt-decode'
+import { toast } from 'react-toastify';
 
 export default function Login() {
     const { user, setUser } = useContext(UserContext);
@@ -25,15 +26,8 @@ export default function Login() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // TODO: Alterar todos os alerts para algo melhor
-        // Possíveis opções:
-        // https://www.npmjs.com/package/react-custom-alert
-        // https://mui.com/material-ui/react-alert/
-        // https://blog.logrocket.com/create-custom-react-alert-message/
-        // ou qualquer coisa nesse sentido
-
-        if(!email) return alert('Campo de endereço de email não preenchido!');
-        if(!password) return alert('Campo de senha não preenchido!');
+        if(!email) return toast.error('Campo de endereço de email não preenchido!');
+        if(!password) return toast.error('Campo de senha não preenchido!');
 
         try {
             const result = await axios.post(Constants.USER_LOGIN_API_POST_URL, {
@@ -41,14 +35,14 @@ export default function Login() {
                 password
             });
 
-            if(result?.data?.status !== 'ok') return alert(`Erro: ${result.data.error}`);
+            if(result?.data?.status !== 'ok') return toast.error(`Erro: ${result.data.error}`);
 
             const token = result.headers['authorization'];
-            if(!token) return alert('Erro ao extrair token no front-end');
+            if(!token) return toast.error('Erro ao extrair token no front-end');
 
             sessionStorage.setItem('token', token);
             const content = jwtDecode(token.split(' ')[1]);
-            alert('Logado com sucesso!');
+            toast.success('Logado com sucesso!');
             clearFields();
 
             setUser({
@@ -60,10 +54,10 @@ export default function Login() {
             
         } catch(e) {
             const response = e?.response;
-            if(response?.status === 401) return alert(`Email ou senha inválido(s)! Caso tenha cadastrado agora, não se esqueça de confirmar seu email para validar o cadastro.`)
+            if(response?.status === 401) return toast.error(`Email ou senha inválido(s)! Caso tenha cadastrado agora, não se esqueça de confirmar seu email para validar o cadastro.`)
 
-            if(response !== undefined) alert(`Erro: ${response.data.error}`);
-            else alert(`Erro de conexão com o servidor`);
+            if(response !== undefined) toast.error(`Erro: ${response.data.error}`);
+            else toast.error(`Erro de conexão com o servidor`);
         }
     }
     

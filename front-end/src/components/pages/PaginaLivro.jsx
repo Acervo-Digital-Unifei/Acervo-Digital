@@ -6,6 +6,7 @@ import { UserContext } from "../../App";
 
 import { useRef, useState } from 'react'
 import { Navigate } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function PaginaLivro() {
     //states 
@@ -20,7 +21,7 @@ export default function PaginaLivro() {
     const buttonAtualizar = ()=>{
         if(user.privilege){
             Navigate("/atualizarlivro");}
-        else{alert("Você não tem permissao pra isso!")};
+        else{toast.error("Você não tem permissao pra isso!")};
         
     }
     return (

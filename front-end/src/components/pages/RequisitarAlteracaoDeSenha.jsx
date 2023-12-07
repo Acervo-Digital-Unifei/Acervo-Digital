@@ -5,6 +5,7 @@ import ButtonSubmit from '../ButtonSubmit'
 import { useState } from 'react'
 import axios from 'axios';
 import * as Constants from '../../constants'
+import { toast } from 'react-toastify';
 
 export default function RequisitarAlteracaoDeSenha() {
 
@@ -13,24 +14,17 @@ export default function RequisitarAlteracaoDeSenha() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(!email) return alert('Campo de email vazio!');
-
-        // TODO: Alterar todos os alerts para algo melhor
-        // Possíveis opções:
-        // https://www.npmjs.com/package/react-custom-alert
-        // https://mui.com/material-ui/react-alert/
-        // https://blog.logrocket.com/create-custom-react-alert-message/
-        // ou qualquer coisa nesse sentido
+        if(!email) return toast.error('Campo de email vazio!');
 
         try {
             await axios.post(Constants.USER_REQUEST_CHANGE_PASSWORD_POST_URL, {
                 email
             });
 
-            alert('Se existe algum usuário com este endereço de email, um email foi enviado, requisitando a alteração de senha.');
+            toast.info('Se existe algum usuário com este endereço de email, um email foi enviado, requisitando a alteração de senha.');
         } catch(e) {
             const response = e?.response;
-            if(response?.data?.error) alert(`Erro: ${response.error}`);
+            if(response?.data?.error) toast.error(`Erro: ${response.error}`);
         }
     }
 

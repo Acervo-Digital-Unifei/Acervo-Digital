@@ -5,17 +5,11 @@ import * as Constants from '../../constants'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../App'
 import { jwtDecode } from 'jwt-decode'
+import { toast } from 'react-toastify';
 
 
 export default function ConfirmarEmail() {
     const { user, setUser } = useContext(UserContext);
-
-    // TODO: Alterar todos os alerts para algo melhor
-    // Possíveis opções:
-    // https://www.npmjs.com/package/react-custom-alert
-    // https://mui.com/material-ui/react-alert/
-    // https://blog.logrocket.com/create-custom-react-alert-message/
-    // ou qualquer coisa nesse sentido
 
     const initialized = useRef(false);
 
@@ -48,21 +42,21 @@ export default function ConfirmarEmail() {
                         email: content.email,
                         privilege: content.privilege
                     });
-                    alert('Conta cadastrada com sucesso!');
+                    toast.success('Conta cadastrada com sucesso!');
                     navigate('/');
                     return;
                 }
                  
-                alert('Email alterado com sucesso, logue novamente com o novo email!');
+                toast.success('Email alterado com sucesso, logue novamente com o novo email!');
                 try {sessionStorage.removeItem('token');} catch{} // I don't know if this function throws something
                 setUser(null);
                 navigate('/');
                 return;
             } catch(e) {
                 const response = e?.response;
-                if(response?.status === 400) alert('Código de confirmação expirado');
-                else if(response?.data?.error) alert(`Erro: ${response.data.error}`);
-                else alert('Erro de conexão com o servidor');
+                if(response?.status === 400) toast.error('Código de confirmação expirado');
+                else if(response?.data?.error) toast.error(`Erro: ${response.data.error}`);
+                else toast.error('Erro de conexão com o servidor');
             }
             navigate('/');
         }, 100);
