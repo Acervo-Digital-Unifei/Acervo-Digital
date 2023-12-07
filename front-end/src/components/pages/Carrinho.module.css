@@ -7,7 +7,7 @@
 .carrinho h2 {
     font-size: 2.5rem;
     color: var(--input-color);
-    margin: 200px 0 50px 0;
+    margin: 100px 0 50px 0;
 }
 
 .carrinho p {
@@ -28,4 +28,31 @@
 .carrinho button:hover {
     border: 1px solid var(--laranja);
     color: var(--laranja);
+}
+
+
+.sectionCarr {
+    display: flex;
+    flex-direction: column;
+    width: 800px;
+    
+}
+.sectionCarr p {
+    color: #736834;
+    text-transform: uppercase;
+}
+.priceCarr {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.unity {
+    display: flex;
+    gap: 40px;
+}
+ .cabecalhoCarr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    
 }

@@ -1,0 +1,13 @@
+.carrItem {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+.carrItem p {
+    font-size: 1.1rem;
+    color: black;
+}
+.carrUnity {
+    display: flex;
+    gap: 40px;
+}
