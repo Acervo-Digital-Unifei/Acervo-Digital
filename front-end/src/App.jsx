@@ -20,6 +20,7 @@ import AtualizarLivro from './components/pages/AtualizarLivro'
 import Profile from './components/pages/Profile'
 import CompraFinalizada from './components/pages/CompraFinalizada'
 import SobreNos from './components/pages/SobreNos'
+import CadastrarLivro from './components/pages/CadastrarLivro'
 
 export const UserContext = React.createContext(null);
 
@@ -94,6 +95,7 @@ function App() {
               <Route path="/profile" element={<Profile />} />
               <Route path="/comprafinalizada" element={<CompraFinalizada />} />
               <Route path="/sobrenos" element={<SobreNos />} />
+              <Route path="/cadastrarlivros" element={<CadastrarLivro />} />
               
                       
           </Routes>
