@@ -5,6 +5,7 @@ import ButtonSubmit from '../ButtonSubmit'
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify';
 import * as Constants from '../../constants'
 
 export default function AlterarSenha() {
@@ -30,12 +31,12 @@ export default function AlterarSenha() {
             try {
                 const result = await axios.get(`${Constants.USER_REQUEST_EXISTS_GET_URL}?code=${code}`);
                 if(!result.data?.response) {
-                    alert('Código de alteração de senha expirado!');
+                    toast.error('Código de alteração de senha expirado!');
                     navigate('/');    
                     return;
                 }
             } catch(e) {
-                alert('Erro de conexão com o servidor!')
+                toast.error('Erro de conexão com o servidor!')
                 navigate('/');
             }
         })();
@@ -44,19 +45,12 @@ export default function AlterarSenha() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(!password) return alert('Campo de senha vazio!');
-        if(!passwordConfirm) return alert('Campo de confirmação de senha vazio!');
+        if(!password) return toast.error('Campo de senha vazio!');
+        if(!passwordConfirm) return toast.error('Campo de confirmação de senha vazio!');
 
         if(password !== passwordConfirm)
-            return alert('Senha e confirmação de senha não combinam!');
-
-        // TODO: Alterar todos os alerts para algo melhor
-        // Possíveis opções:
-        // https://www.npmjs.com/package/react-custom-alert
-        // https://mui.com/material-ui/react-alert/
-        // https://blog.logrocket.com/create-custom-react-alert-message/
-        // ou qualquer coisa nesse sentido
-
+            return toast.error('Senha e confirmação de senha não combinam!');
+        
         const code = new URLSearchParams(location.search).get('code');
         if(!code) {
             navigate('/');
@@ -69,12 +63,12 @@ export default function AlterarSenha() {
                 password
             });
 
-            alert('Senha alterada com sucesso!');
+            toast.success('Senha alterada com sucesso!');
         } catch(e) {
             const response = e?.response;
-            if(response?.status === 400) alert('Código de alteração de senha expirado!');
-            else if(response?.data?.error) alert(`Erro: ${response.data.error}`);
-            else alert('Erro de conexão com o servidor!');
+            if(response?.status === 400) toast.error('Código de alteração de senha expirado!');
+            else if(response?.data?.error) toast.error(`Erro: ${response.data.error}`);
+            else toast.error('Erro de conexão com o servidor!');
         }
         navigate('/');
     }

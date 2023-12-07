@@ -1,17 +1,18 @@
 import Container from "../layouts/Container";
-import * as styles from './PaginaLivro.module.css';
+import styles from './AtualizarLivro.module.css'
+import Input from "../Input";
 import Button from "../Button";
-import { useContext } from "react";
 import { UserContext } from "../../App";
-
-import { useRef, useState } from 'react'
+import { useState } from "react";
 import { Navigate } from "react-router-dom";
 
 export default function PaginaLivro() {
-    //states 
-    const [bookTitle, setBookTitle] = useState("O homem e seus símbolos");
-    const [author, setAuthor] = useState("Carl G. Jung");
-    const [publisher, setPublisher] = useState("HarperCollins Brasil");
+    
+    const [nome, setNome] = useState("");
+    const [preco, setPreco] = useState("");
+    const [editora, setEditora] = useState("");
+    const [autor, setAutor] = useState("");
+    
     const { user, setUser } = useContext(UserContext);
     
     const buttonAdicionar = ()=>{
@@ -25,8 +26,26 @@ export default function PaginaLivro() {
     }
     return (
     <Container customClass='backgroundStandart'>
-        
-        
+        <section className={styles.atualiza}>
+            <h2></h2>
+            <form action="">
+                <div className={styles.imgAtualiza}>
+
+                </div>
+                <div className={styles.inputsLivro}>
+                    <h3>{nome}Nome livro</h3>
+                    <p>{preco}preço</p>
+                    <br/>
+                    <p>{editora}Editora</p>
+                    <p>{autor}Autor</p>
+                   
+                   '' <div className={styles.submit}>
+                        <Button text="Carrinho" customClass="marginless" onClick={addCarrinho} />
+                        <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
+                    </div>
+                </div>
+            </form>
+        </section>
     </Container>
 )
 }

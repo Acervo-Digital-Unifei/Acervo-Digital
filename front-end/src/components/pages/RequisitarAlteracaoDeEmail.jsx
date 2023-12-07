@@ -7,6 +7,7 @@ import axios from 'axios'
 import * as Constants from '../../constants'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../App'
+import { toast } from 'react-toastify';
 
 
 export default function RequisitarAlteracaoDeEmail() {
@@ -18,7 +19,7 @@ export default function RequisitarAlteracaoDeEmail() {
         if (initialized.current) return;
         initialized.current = true;
         if(user === null) {
-            alert('Você deve estar logado para alterar seu email!');
+            toast.error('Você deve estar logado para alterar seu email!');
             navigator('/');
             return;
         }
@@ -28,21 +29,21 @@ export default function RequisitarAlteracaoDeEmail() {
         e.preventDefault();
 
         if(user === null) {
-            alert('Você deve estar logado para alterar seu email!');
+            toast.error('Você deve estar logado para alterar seu email!');
             navigator('/');
             return;
         }
 
         try {
             await axios.post(Constants.USER_REQUEST_CHANGE_EMAIL_POST_URL);
-            alert('Email de solicitação de alteração de email enviado.');
+            toast.info('Email de solicitação de alteração de email enviado.');
             navigator('/');
         } catch(e) {
             const response = e?.response;
             if(response?.status === 403) {
-                alert('Login expirado. Tente logar novamente!');
+                toast.error('Login expirado. Tente logar novamente!');
             } else if(response?.data?.error) {
-                alert(`Erro: ${response.data.error}`);
+                toast.error(`Erro: ${response.data.error}`);
             }
 
             navigator('/');

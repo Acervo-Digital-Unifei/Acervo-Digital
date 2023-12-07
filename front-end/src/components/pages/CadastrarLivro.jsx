@@ -8,6 +8,7 @@ import { UserContext } from '../../App'
 import { useRef, useState, useContext, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import * as Constants from '../../constants';
+import { toast } from 'react-toastify';
 
 export default function CadastrarLivro() {
     const [thumbnail, setThumbnail] = useState("");
@@ -28,7 +29,7 @@ export default function CadastrarLivro() {
         if (initialized.current) return;
         initialized.current = true;
         if(user === null || user.privilege !== 'admin') {
-            alert('Você precisa ser admin para acessar esta página!');
+            toast.error('Você precisa ser admin para acessar esta página!');
             navigate('/');
         }
     }, []);
@@ -82,12 +83,12 @@ export default function CadastrarLivro() {
     const handleButtonISBN = async (e) => {
         e.preventDefault();
         if (isbn === '')
-            return alert('Campo ISBN vazio!');
+            return toast.error('Campo ISBN vazio!');
 
         try {
             const result = await axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`)
             if (Object.entries(result.data).length === 0)
-                return alert('ISBN não encontrado na database openlibrary.org');
+                return toast.warning('ISBN não encontrado na database openlibrary.org');
             
             const { details, thumbnail_url } = result.data[`ISBN:${isbn}`];
             console.log(result.data)
@@ -108,22 +109,22 @@ export default function CadastrarLivro() {
         e.preventDefault();
 
         if(!autor)
-            return alert('Campo de autor não preenchido!');
+            return toast.error('Campo de autor não preenchido!');
 
         if(!editora)
-            return alert('Campo de editora não preenchido!');
+            return toast.error('Campo de editora não preenchido!');
 
         if(!nome)
-            return alert('Campo de nome do livro não preenchido!');
+            return toast.error('Campo de nome do livro não preenchido!');
     
         if(!preco)
-            return alert('Campo de preço não preenchido!');
+            return toast.error('Campo de preço não preenchido!');
 
         if(Number.isNaN(preco) || Number(preco) < 0)
-            return alert('Preço inválido!');
+            return toast.error('Preço inválido!');
 
         if(!thumbnail)
-            return alert('Capa do livro não adicionada!');
+            return toast.error('Capa do livro não adicionada!');
 
         const dadosLivro = {
             "thumbnail": thumbnail,
@@ -136,19 +137,19 @@ export default function CadastrarLivro() {
         try {
             const result = await axios.post(Constants.BOOK_ADD_API_POST_URL, dadosLivro);
             const id = result.data.id;
-            alert('Livro cadastrado com sucesso!');
+            toast.successc('Livro cadastrado com sucesso!');
             navigate(`/livro/${id}`);
         } catch(e) {
             const result = e.response;
 
             if(!result)
-                return alert('Erro de conexão com o servidor!');
+                return toast.error('Erro de conexão com o servidor!');
             if(result.status === 400) 
-                return alert('Erro ao cadastrar livro!');
+                return toast.error('Erro ao cadastrar livro!');
             if(result.status === 422)
-                return alert(`Erro: ${result.data.error}`);
+                return toast.error(`Erro: ${result.data.error}`);
             if(result.status === 403)
-                return alert(`Erro de autenticação, tente logar novamente!`);
+                return toast.error(`Erro de autenticação, tente logar novamente!`);
         }
     }
 
