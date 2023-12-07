@@ -2,15 +2,7 @@
     margin: 0 auto;
 }
 
-.atualiza h2 {
-    text-align: center;
-    font-family: var(--font-principal);
-    color: var(--marrom-principal);
-    margin-top: 80px;
-    font-size: 2.5rem;
-    margin-bottom: 50px;
-   
-}
+
 
 .imgAtualiza {
     display: block;
@@ -20,16 +12,34 @@
 }
 
 .atualiza form{
+    margin-top: 80px;
     display: flex;
     flex-direction: row;
     gap: 100px;
 }
 
+.atualiza h3{
+    overflow: hidden;
+    font-family: var(--font-principal);
+    text-transform: uppercase;
+    color: var(--laranja);
+    text-shadow: 1px 1px black;
+    border-bottom: 1px solid black;
+}
+
 .atualiza .inputsLivro {
     margin-top: 80px;
 }
-
+.editInfos {
+    display: flex;
+    justify-content: space-between;
+}
+.price {
+    color: royalblue;
+    font-weight: bold;
+}
 .submit {
+    margin-top: 50px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

@@ -1,6 +1,5 @@
 import Container from "../layouts/Container";
 import styles from './PaginaLivro.module.css'
-import styles from './PaginaLivro.module.css'
 import Input from "../Input";
 import Button from "../Button";
 import { UserContext } from "../../App";
@@ -104,17 +103,20 @@ export default function PaginaLivro() {
   return (
     <Container customClass='backgroundStandart'>
       <section className={styles.atualiza}>
-        <h2></h2>
+        
         <form action="">
           <div className={styles.imgAtualiza}>
             <img src={thumbnail} />
           </div>
           <div className={styles.inputsLivro}>
-            <h3>{nome}Nome livro</h3>
-            <p>{preco}preço</p>
-            <br />
-            <p>{editora}Editora</p>
-            <p>{autor}Autor</p>
+            <h3>{nome}</h3>
+            <div className={styles.editInfos}>
+                <div className={styles.edit}>
+                    <p>Editora: {editora}</p>
+                    <p>Autor: {autor}</p>
+                </div>
+                <p className={styles.price}>R${preco}</p>
+            </div>
 
             <div className={styles.submit}>
               <Button text="Carrinho" customClass="marginless" onClick={addCarrinho} />
