@@ -44,7 +44,7 @@ export default function PaginaLivro() {
             <h2></h2>
             <form action="">
                 <div className={styles.imgAtualiza}>
-
+                    <img src="" alt="" />
                 </div>
                 <div className={styles.inputsLivro}>
                     <h3>{nome}Nome livro</h3>
@@ -53,9 +53,9 @@ export default function PaginaLivro() {
                     <p>{editora}Editora</p>
                     <p>{autor}Autor</p>
                    
-                   '' <div className={styles.submit}>
-                        <Button text="Carrinho" customClass="marginless" onClick={addCarrinho} />
-                        <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
+                   <div className={styles.submit}>
+                        <div  className={styles.btn}><Button text="Carrinho" onClick={addCarrinho} /></div>
+                        <div className={styles.btn}><Button text="Atualiza"  onClick={goToAtualiza} /></div>
                     </div>
                 </div>
             </form>
