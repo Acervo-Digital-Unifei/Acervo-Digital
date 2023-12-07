@@ -8,10 +8,17 @@ import { useEffect, useState } from 'react'
 
 export default function Livros() {
 
-const [book,setBook] = useState({})
 
-   
-    console.log(book, "livro do console");
+
+useEffect(() => {
+
+    const getBook = async () => {
+        const result = await axios.get("http://localhost:3000/book");
+        const book = result.data.books;
+        console.log(book[2].title);
+    }
+        getBook()}, []);
+        
 
     return( 
         <Container customClass='backgroundStandart'>
@@ -21,6 +28,7 @@ const [book,setBook] = useState({})
                 </div>
                 <div>
                     <h1 className={styles.testeh1}>O</h1>
+
                 </div>
                     
             </section>
