@@ -71,13 +71,12 @@ export default function CadastrarLivro() {
             "author":author,
             "publisher": editora,
             "title": nome,
-            "price": preco
+            "price": Number(preco)
                    
         }
     
-        
-            const response = await axios.post("http://localhost:3000/book/add", dadosLivro);
-            console.log('Resposta:', dadosLivro);
+            
+        const response = await axios.post("http://localhost:3000/book/add", dadosLivro);
       
     }
 

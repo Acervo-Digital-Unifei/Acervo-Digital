@@ -3,6 +3,7 @@ import styles from './AtualizarLivro.module.css'
 import Input from "../Input";
 import Button from "../Button";
 import axios from 'axios';
+import ButtonSubmit from "../ButtonSubmit";
 
 import { useRef, useState } from 'react'
 
@@ -10,6 +11,20 @@ export default function AtualizarLivro() {
     const [thumbnail, setThumbnail] = useState("");
     const [isbn, gfdgdf] = useState("");
     const ref = useRef();
+    //state
+    
+    const handleNomeChange = (e) =>{
+        setNome(e.target.value);
+    };
+    const handlePrecoChange = (e) =>{
+        setPreco(e.target.value);
+    };
+    const handleEditoraChange = (e) =>{
+        setEditora(e.target.value);
+    };
+    const handleAutorChange = (e) =>{
+        setAutor(e.target.value);
+    };
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -41,6 +56,22 @@ export default function AtualizarLivro() {
 
     }
 
+    const buttonSubmit = async (e)=> {
+        e.preventDefault();
+          const dadosLivro = {
+              "thumbnail": "...",
+              "author":author,
+              "publisher": editora,
+              "title": nome,
+              "price": Number(preco)
+                     
+          }
+      
+              
+          const response = await axios.post("http://localhost:3000/book/add", dadosLivro);
+        
+      }
+
     return (
     <Container customClass='backgroundStandart'>
         <section className={styles.atualiza}>
@@ -52,18 +83,20 @@ export default function AtualizarLivro() {
                 <div className={styles.inputsLivro}>
                     <input ref={ref} type="file" hidden accept="image/*" onChange={handleThumbChange}/>
                     <Input type='text' name='autorChange' placeholder="Autor" 
-                    customClass="backgroundStandart"/>
+                    customClass="backgroundStandart" onChange={handleAutorChange}/>
                     <Input type='text' name='editoraChange' placeholder="Editora" 
-                    customClass="backgroundStandart"/>
+                    customClass="backgroundStandart"onChange={handleEditoraChange}/>
                     <Input type='text' name='nomeChange' placeholder="Nome do livro" 
-                    customClass="backgroundStandart"/>
+                    customClass="backgroundStandart"onChange={handleNomeChange}/>
                     <Input type='number' name='precoChange' placeholder="Preço" 
-                    customClass="backgroundStandart"/>
+                    customClass="backgroundStandart" onChange={handlePrecoChange}/>
                     <div className={styles.submit}>
                         <Input type='number' name='isbn' placeholder="ISBN"
-                        customClass="backgroundStandartM" value={isbn} onChange={e => gfdgdf(e.target.value)}/>
+                        customClass="backgroundStandartM" value={isbn} onChange={e => setIsbn(e.target.value)}/>
                         <Button text="Find" customClass="marginless" onClick={handleButtonISBN}/>
+                    
                     </div>
+                     <ButtonSubmit text="Cadastrar" func ={buttonSubmit} />
                 </div>
             </form>
         </section>
