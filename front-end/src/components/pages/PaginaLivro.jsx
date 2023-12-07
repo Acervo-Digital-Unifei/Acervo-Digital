@@ -5,7 +5,6 @@ import Button from "../Button";
 import { UserContext } from "../../App";
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
-import { useContext } from "react";
 
 export default function PaginaLivro() {
     
@@ -15,23 +14,15 @@ export default function PaginaLivro() {
     const [autor, setAutor] = useState("");
     
     const { user, setUser } = useContext(UserContext);
-
-    const goToAtualiza = ()=>{
-        if (user !== null && user.privilege === 'admin') {
-            Navigate("/atualizalivro");
-          } else {
-            alert("Você não tem permissão para isso!");
-          }
-        }
-
-    const addCarrinho =()=> { 
-        if (user !== null) {
-            Navigate("/carrinho");
-          } else {
-            alert("Voce deve estar logado para isso!");
-            Navigate("/login");
-          }
-
+    
+    const buttonAdicionar = ()=>{
+        Navigate("/carrinho");
+    }
+    const buttonAtualizar = ()=>{
+        if(user.privilege){
+            Navigate("/atualizarlivro");}
+        else{alert("Você não tem permissao pra isso!")};
+        
     }
     return (
     <Container customClass='backgroundStandart'>

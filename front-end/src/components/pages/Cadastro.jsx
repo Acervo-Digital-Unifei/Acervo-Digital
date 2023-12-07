@@ -5,6 +5,7 @@ import ButtonSubmit from '../ButtonSubmit'
 import { useState } from 'react'
 import axios from 'axios'
 import * as Constants from '../../constants'
+import { toast } from 'react-toastify';
 
 export default function Cadastro() {
     const [name, setName] = useState("");
@@ -28,23 +29,16 @@ export default function Cadastro() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         
-        // TODO: Alterar todos os alerts para algo melhor
-        // Possíveis opções:
-        // https://www.npmjs.com/package/react-custom-alert
-        // https://mui.com/material-ui/react-alert/
-        // https://blog.logrocket.com/create-custom-react-alert-message/
-        // ou qualquer coisa nesse sentido
-
-        if(!name) return alert('Campo de nome não preenchido!');
-        else if(!email) return alert('Campo de email não preenchido!');
-        else if(!password) return alert('Campo de senha não preenchido!');
-        else if(!passwordConfirm) return alert('Campo de confirmação de senha não preenchido!');
+        if(!name) return toast.error('Campo de nome não preenchido!');
+        else if(!email) return toast.error('Campo de email não preenchido!');
+        else if(!password) return toast.error('Campo de senha não preenchido!');
+        else if(!passwordConfirm) return toast.error('Campo de confirmação de senha não preenchido!');
 
         if(password !== passwordConfirm)
-            return alert('Senha e confirmação de senha não combinam!');
+            return toast.error('Senha e confirmação de senha não combinam!');
 
         if(!checkName(name))
-            return alert('Nome inválido. Seu nome só pode conter letras e espaços, e deve ter um tamanho máximo de 70 caracteres.')
+            return toast.error('Nome inválido. Seu nome só pode conter letras e espaços, e deve ter um tamanho máximo de 70 caracteres.')
 
         try {
             const result = await axios.post(Constants.USER_REGISTER_API_POST_URL, {
@@ -53,18 +47,18 @@ export default function Cadastro() {
                 email
             });
 
-            if(result?.data?.status !== 'ok') return alert(`Erro: ${result.data.error}`);
-            alert(`Email de confirmação de cadastro enviado para ${email}. Confira sua caixa de email. Caso não o encontre, confira a caixa de spam.`);
+            if(result?.data?.status !== 'ok') return toast.error(`Erro: ${result.data.error}`);
+            toast.success(`Email de confirmação de cadastro enviado para ${email}. Confira sua caixa de email. Caso não o encontre, confira a caixa de spam.`);
             clearFields();
         } catch(e) {
             const response = e?.response;
             
             if(response?.data?.error !== undefined) {
-                if(response.data.error === 'Email already registered') alert(`Email "${email.toLocaleLowerCase()}" já cadastrado`);
-                else if(response.data.error === 'Username already registered') alert(`Já existe alguém cadastrado com o nome "${name}"`);
-                else alert(`Erro: ${response.data.error}`);
+                if(response.data.error === 'Email already registered') toast.error(`Email "${email.toLocaleLowerCase()}" já cadastrado`);
+                else if(response.data.error === 'Username already registered') toast.error(`Já existe alguém cadastrado com o nome "${name}"`);
+                else toast.error(`Erro: ${response.data.error}`);
             }
-            else alert(`Erro de conexão com o servidor`);
+            else toast.error(`Erro de conexão com o servidor`);
         }
     }
 

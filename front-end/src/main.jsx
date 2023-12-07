@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import axios from 'axios';
+import { ToastContainer } from 'react-toastify';
 import * as Constants from './constants';
+import 'react-toastify/dist/ReactToastify.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
+  <>
     <App />
-  </React.StrictMode>,
+    <ToastContainer floatingTime={5000} position='top-right'/>
+  </>,
 )
 
 axios.interceptors.request.use((config) => {

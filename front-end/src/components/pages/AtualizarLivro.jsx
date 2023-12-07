@@ -8,6 +8,7 @@ import * as Constants from '../../constants';
 import { UserContext } from '../../App'
 import { useRef, useState, useContext, useEffect } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 
 export default function AtualizarLivro() {
     const [thumbnail, setThumbnail] = useState("");
@@ -31,14 +32,14 @@ export default function AtualizarLivro() {
         if (initialized.current) return;
         initialized.current = true;
         if(user === null || user.privilege !== 'admin') {
-            alert('Você precisa ser admin para acessar esta página!');
+            toast.error('Você precisa ser admin para acessar esta página!');
             navigate('/');
             return;
         }
         
         const id = params.id;
         if(!id) {
-            alert('Id do livro inválido!');
+            toast.error('Id do livro inválido!');
             navigate('/');
             return;
         }
@@ -55,10 +56,10 @@ export default function AtualizarLivro() {
                 setPreco(''+book.price);
                 setThumbnail(book.thumbnail);
             } catch(e) {
-                if(e.response?.status === 404 || e.response?.status === 400) alert('Livro não encontrado!');
-                else if(e.response?.status === 403) alert(`Erro de autenticação. Tente logar novamente!`);
-                else if(e.response?.status) alert(`Erro: ${e.response.data.error}`);
-                else if(!e.response) alert('Erro de conexão');
+                if(e.response?.status === 404 || e.response?.status === 400) toast.error('Livro não encontrado!');
+                else if(e.response?.status === 403) toast.error(`Erro de autenticação. Tente logar novamente!`);
+                else if(e.response?.status) toast.error(`Erro: ${e.response.data.error}`);
+                else if(!e.response) toast.error('Erro de conexão');
                 navigate('/');
             }
         })();
@@ -112,12 +113,12 @@ export default function AtualizarLivro() {
     const handleButtonISBN = async (e) => {
         e.preventDefault();
         if (isbn === '')
-            return alert('Campo ISBN vazio!');
+            return toast.error('Campo ISBN vazio!');
 
         try {
             const result = await axios.get(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&jscmd=details&format=json`)
             if (Object.entries(result.data).length === 0)
-                return alert('ISBN não encontrado na database openlibrary.org');
+                return toast.warning('ISBN não encontrado na database openlibrary.org');
             
             const { details, thumbnail_url } = result.data[`ISBN:${isbn}`];
             console.log(result.data)
@@ -138,22 +139,22 @@ export default function AtualizarLivro() {
         e.preventDefault();
 
         if(!autor)
-            return alert('Campo de autor não preenchido!');
+            return toast.error('Campo de autor não preenchido!');
 
         if(!editora)
-            return alert('Campo de editora não preenchido!');
+            return toast.error('Campo de editora não preenchido!');
 
         if(!nome)
-            return alert('Campo de nome do livro não preenchido!');
+            return toast.error('Campo de nome do livro não preenchido!');
     
         if(!preco)
-            return alert('Campo de preço não preenchido!');
+            return toast.error('Campo de preço não preenchido!');
 
         if(Number.isNaN(preco) || Number(preco) < 0)
-            return alert('Preço inválido!');
+            return toast.error('Preço inválido!');
 
         if(!thumbnail)
-            return alert('Capa do livro não adicionada!');
+            return toast.error('Capa do livro não adicionada!');
 
         const dadosLivro = {
             "id": id,
@@ -166,19 +167,19 @@ export default function AtualizarLivro() {
 
         try {
             await axios.post(Constants.BOOK_UPDATE_API_POST_URL, dadosLivro);
-            alert('Livro atualizado com sucesso!');
+            toast.success('Livro atualizado com sucesso!');
             navigate(`/livro/${id}`);
         } catch(e) {
             const result = e.response;
 
             if(!result)
-                return alert('Erro de conexão com o servidor!');
+                return toast.error('Erro de conexão com o servidor!');
             if(result.status === 400) 
-                return alert('Erro ao atualizar livro!');
+                return toast.error('Erro ao atualizar livro!');
             if(result.status === 422)
-                return alert(`Erro: ${result.data.error}`);
+                return toast.error(`Erro: ${result.data.error}`);
             if(result.status === 403)
-                return alert(`Erro de autenticação, tente logar novamente!`);
+                return toast.error(`Erro de autenticação, tente logar novamente!`);
         }
     }
 

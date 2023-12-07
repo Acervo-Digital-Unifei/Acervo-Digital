@@ -30,6 +30,12 @@
     background-color: var(--bg-color);
 }
 
+.backgroundStandartG {
+    width: 100vw;
+    background-color: var(--bg-color);
+}
+
+
 .backgroundWhite {
     width: 100vw;
     height: 800px;

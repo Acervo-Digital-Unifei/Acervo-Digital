@@ -5,6 +5,7 @@ import ButtonSubmit from '../ButtonSubmit'
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { toast } from 'react-toastify';
 import * as Constants from '../../constants'
 
 export default function AlterarEmail() {
@@ -30,12 +31,12 @@ export default function AlterarEmail() {
             try {
                 const result = await axios.get(`${Constants.USER_REQUEST_EXISTS_GET_URL}?code=${code}`);
                 if(!result.data?.response) {
-                    alert('Código de alteração de email expirado!');
+                    toast.error('Código de alteração de email expirado!');
                     navigate('/');    
                     return;
                 }
             } catch(e) {
-                alert('Erro de conexão com o servidor!')
+                toast.error('Erro de conexão com o servidor!')
                 navigate('/');
             }
         })();
@@ -44,16 +45,9 @@ export default function AlterarEmail() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(!email) return alert('Campo de email vazio!');
-        if(!emailConfirm) return alert('Campo de confirmação de email vazio!');
-        if(email !== emailConfirm) return alert('Emails não combinam!');
-
-        // TODO: Alterar todos os alerts para algo melhor
-        // Possíveis opções:
-        // https://www.npmjs.com/package/react-custom-alert
-        // https://mui.com/material-ui/react-alert/
-        // https://blog.logrocket.com/create-custom-react-alert-message/
-        // ou qualquer coisa nesse sentido
+        if(!email) return toast.error('Campo de email vazio!');
+        if(!emailConfirm) return toast.error('Campo de confirmação de email vazio!');
+        if(email !== emailConfirm) return toast.error('Emails não combinam!');
 
         const code = new URLSearchParams(location.search).get('code');
         if(!code) {
@@ -67,13 +61,13 @@ export default function AlterarEmail() {
                 email
             });
 
-            alert(`Email de confirmação enviado a "${email}"`);
+            toast.info(`Email de confirmação enviado a "${email}"`);
         } catch(e) {
             const response = e?.response;
-            if(response?.data?.error === 'Email already registered') alert(`Email "${email}" já está em uso!`)
-            else if (response?.status === 400) alert('Código de alteração de email expirado!');
-            else if(response?.data?.error) alert(`Erro: ${response.data.error}`);
-            else alert('Erro de conexão com o servidor!');
+            if(response?.data?.error === 'Email already registered') toast.error(`Email "${email}" já está em uso!`)
+            else if (response?.status === 400) toast.error('Código de alteração de email expirado!');
+            else if(response?.data?.error) toast.error(`Erro: ${response.data.error}`);
+            else toast.error('Erro de conexão com o servidor!');
         }
         navigate('/');
     }
