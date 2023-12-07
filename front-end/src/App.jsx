@@ -50,10 +50,24 @@ function App() {
         email: content.email,
         privilege: content.privilege
       });
-      lista.pop()
+      
     }
     
   }, []);
+  
+  useEffect(() => {
+    if (user) {
+      setLista(prevLista => prevLista.slice(0, -1)); 
+    } else {
+      setLista([
+        {
+          link: "/cadastrar",
+          text: "Cadastrar"
+        }
+      ]);
+    }
+  }, [user]);
+  
 
   // On loggedIn/loggedOut
   useEffect(() => {
