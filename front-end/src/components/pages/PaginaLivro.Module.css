@@ -19,6 +19,11 @@
     background-color: black;
 }
 
+.imgAtualiza img {
+    width: 100%;
+    height: 100%;
+}
+
 .atualiza form{
     display: flex;
     flex-direction: row;
@@ -34,9 +39,10 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 40px;
 }
 
 
-.submit button{
-   margin-bottom: 45px;
+.btn{
+   margin-left: 45px;
 }
