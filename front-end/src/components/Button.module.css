@@ -1,0 +1,38 @@
+.buttonSubmit {
+    padding: .9rem 4rem;
+    background-color: var(--marrom-principal);
+    color: #FFF;
+    border: none;
+    margin: auto;
+    font-size: 1.2rem;
+    font-family: var(--font-input);
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s;
+
+}
+.buttonSubmit:hover {
+    background-color: #8C513B;
+    color: white; 
+  }
+
+.marginless {
+    margin: 0px;
+    padding: .5rem 3rem;
+}
+/*
+.buttonSubmit:hover {
+    animation: bubble 0.4s ease-out;
+  }
+  
+  @keyframes bubble {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }*/

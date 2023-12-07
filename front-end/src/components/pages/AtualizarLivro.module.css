@@ -1,3 +1,31 @@
+img {
+    width: auto;
+    height: auto;
+    max-width: 100%;
+    max-height: 100%;
+    margin: auto;
+    display: block;
+    border: none;
+}
+
+.imgAtualiza {
+    display: block;
+    width: 400px;
+    height: 500px;
+    overflow: hidden;
+    background-color: black;
+    justify-content: center;
+}
+
+.imgAtualiza2 {
+    display: block;
+    width: 400px;
+    height: 500px;
+    overflow: hidden;
+    background-color: #F2ECCE;
+    justify-content: center;
+}
+
 .atualiza {
     margin: 0 auto;
 }
@@ -10,13 +38,6 @@
     font-size: 2.5rem;
     margin-bottom: 50px;
    
-}
-
-.imgAtualiza {
-    display: block;
-    width: 400px;
-    height: 500px;
-    background-color: black;
 }
 
 .atualiza form{

@@ -37,12 +37,12 @@ export default function Login() {
 
         try {
             const result = await axios.post(Constants.USER_LOGIN_API_POST_URL, {
-                password,
-                email
+                email,
+                password
             });
 
             if(result?.data?.status !== 'ok') return alert(`Erro: ${result.data.error}`);
-            
+
             const token = result.headers['authorization'];
             if(!token) return alert('Erro ao extrair token no front-end');
 
