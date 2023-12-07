@@ -50,4 +50,6 @@ header h1 {
     color: #8C513B;
 }
 
-
+.linkTitle:hover {
+    text-decoration: none;
+}

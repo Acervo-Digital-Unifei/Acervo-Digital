@@ -14,7 +14,7 @@ export default function Navbar({props}) {
         <nav className={styles.navbar}>
             <header>
                 <Link to='/'><img src={Logo} className={styles.logo}/></Link>
-                <h1>ACERVO DIGITAL</h1>
+                <Link to='/' className={styles.linkTitle}><h1>ACERVO DIGITAL</h1></Link>
                 <div>
                     <Link to="/carrinho">
                         <MdShoppingCart className={styles.icon}/>
