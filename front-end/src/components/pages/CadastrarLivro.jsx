@@ -189,7 +189,7 @@ export default function CadastrarLivro() {
                         <div className={styles.submit}>
                             <Input type='number' name='isbn' placeholder="ISBN"
                                 customClass="backgroundStandartM" value={isbn} onChange={e => setIsbn(e.target.value)} />
-                            <Button text="Find" customClass="marginless" onClick={handleButtonISBN} />
+                            <Button text="Buscar" customClass="marginless" onClick={handleButtonISBN} />
 
                         </div>
                         <ButtonSubmit text="Cadastrar" func={buttonSubmit} />

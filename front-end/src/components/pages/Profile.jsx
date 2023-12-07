@@ -42,7 +42,7 @@ export default function Profile() {
 
                     </div>
                     
-                    <button onClick={logout}>Logout</button>
+                    <button className='buttonclassprofile' onClick={logout}>Logout</button>
 
                     
                 

@@ -20,12 +20,26 @@
 }
 
 .profileclass button {
-    padding: 5px 10px;
+    padding: 15px 15px;
     border-radius: 4px;
+    margin: 5px;
     color: #FFF;
     background-color: var(--marrom-principal);
     border: none;
     cursor: pointer;
+    transition: 0.7s;
+
+}
+.profileclass button:hover {
+    padding: 15px 15px;
+    
+    margin: 5px;
+    color: #FFF;
+    background-color: rgb(187, 107, 61);
+    border: none;
+    cursor: pointer;
+
+
 }
 
 
@@ -51,14 +65,15 @@
     
   }
 
-  button {
+  .buttonclassprofile button {
     margin: 10px;
     font-size: 20px;
     transition: color;
     transition: 0.7s;
+    
   }
  
-  button:hover {
+  .buttonclassprofile button:hover {
     margin: 10px;
     font-size: 25px;
     background-color: rgb(255, 136, 0);
