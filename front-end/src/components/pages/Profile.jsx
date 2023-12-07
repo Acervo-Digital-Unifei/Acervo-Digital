@@ -9,6 +9,7 @@ export default function Profile() {
     const { user, setUser } = useContext(UserContext);
     const navigate = useNavigate();
     const logout = () =>{
+        try {sessionStorage.removeItem('token');} catch{}
         setUser(null);
         navigate('/');
     }

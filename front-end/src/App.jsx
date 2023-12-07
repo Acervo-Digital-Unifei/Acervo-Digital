@@ -24,8 +24,6 @@ import CadastrarLivro from './components/pages/CadastrarLivro'
 
 export const UserContext = React.createContext(null);
 
-
-
 function App() {
   const [lista, setLista] = useState([
    {
@@ -34,27 +32,12 @@ function App() {
   }])
   
   
-  const [user, setUser] = useState(null);
-  
-  const initialized = useRef(false);
-
-  // On load
-  useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
+  const [user, setUser] = useState(() => {
     const token = sessionStorage.getItem('token');
-    
-    if(token) {
-      const content = jwtDecode(token.split(' ')[1]);
-      setUser({
-        username: content.username,
-        email: content.email,
-        privilege: content.privilege
-      });
-      
-    }
-    
-  }, []);
+    if(token)
+      return jwtDecode(token.split(' ')[1]);
+    return null;
+  });
   
   useEffect(() => {
     if (user) {
