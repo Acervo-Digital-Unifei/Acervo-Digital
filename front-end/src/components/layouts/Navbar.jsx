@@ -8,13 +8,13 @@ import { UserContext } from '../../App';
 import { useContext } from 'react';
 
 
-export default function Navbar({props}) {
+export default function Navbar() {
     const { user, setUser } = useContext(UserContext);
     return (
         <nav className={styles.navbar}>
             <header>
                 <Link to='/'><img src={Logo} className={styles.logo}/></Link>
-                <h1>ACERVO DIGITAL</h1>
+                <Link to='/' className={styles.linkTitle}><h1>ACERVO DIGITAL</h1></Link>
                 <div>
                     <Link to="/carrinho">
                         <MdShoppingCart className={styles.icon}/>
@@ -27,16 +27,23 @@ export default function Navbar({props}) {
             </header>
             <ul className={styles.list}>
                 <li className={styles.item}>
-                    <Link to='/livros'>Livros</Link>
-                </li>
-                <li className={styles.item}>
                     <Link to='/'>Home</Link>
                 </li>
-                {props && props.map((item) => (
                 <li className={styles.item}>
-                    <Link to={item.link}>{item.text}</Link>
+                    <Link to='/livros'>Livros</Link>
                 </li>
-                ))}
+                {
+                    user === null ? 
+                    (<li className={styles.item}>
+                        <Link to='/cadastrar'>Cadastrar</Link>
+                    </li>) : (<></>)
+                }
+                {
+                    (user !== null && user.privilege === 'admin') ? 
+                    (<li className={styles.item}>
+                        <Link to='/cadastrarlivro'>Cadastrar Livro</Link>
+                    </li>) : (<></>)
+                }
             </ul>
         </nav>
     )

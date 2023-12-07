@@ -24,61 +24,18 @@ import CadastrarLivro from './components/pages/CadastrarLivro'
 
 export const UserContext = React.createContext(null);
 
-
-
-function App() {
-  const [lista, setLista] = useState([
-   {
-    link: "/cadastrar",
-    text: "Cadastrar"
-  }])
-  
-  
-  const [user, setUser] = useState(null);
-  
-  const initialized = useRef(false);
-
-  // On load
-  useEffect(() => {
-    if (initialized.current) return;
-    initialized.current = true;
+function App() {  
+  const [user, setUser] = useState(() => {
     const token = sessionStorage.getItem('token');
-    
-    if(token) {
-      const content = jwtDecode(token.split(' ')[1]);
-      setUser({
-        username: content.username,
-        email: content.email,
-        privilege: content.privilege
-      });
-      
-    }
-    
-  }, []);
-  
-  useEffect(() => {
-    if (user) {
-      setLista(prevLista => prevLista.slice(0, -1)); 
-    } else {
-      setLista([
-        {
-          link: "/cadastrar",
-          text: "Cadastrar"
-        }
-      ]);
-    }
-  }, [user]);
-  
-
-  // On loggedIn/loggedOut
-  useEffect(() => {
-    console.log('User changed to ' + user)
-  }, [user]);
+    if(token)
+      return jwtDecode(token.split(' ')[1]);
+    return null;
+  });  
 
   return (
     <Router>
         <UserContext.Provider value={{user, setUser}}>
-          <Navbar props={lista}/>
+          <Navbar/>
           <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/livros" element={<Livros />} />
@@ -91,17 +48,14 @@ function App() {
               <Route path="/requisicaoalterarsenha" element={<RequisitarAlteracaoDeSenha />}/> 
               <Route path="/contato" element={<Contato />} />        
               <Route path="/confirmaremail" element={<ConfirmarEmail />} />
-              <Route path="/atualizarlivro" element={<AtualizarLivro />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/comprafinalizada" element={<CompraFinalizada />} />
               <Route path="/sobrenos" element={<SobreNos />} />
-              <Route path="/cadastrarlivros" element={<CadastrarLivro />} />
-              
-                      
+              <Route path="/cadastrarlivro" element={<CadastrarLivro />} />
+              <Route path="/atualizarlivro/:id" element={<AtualizarLivro />} />
           </Routes>
           <Footer/>
         </UserContext.Provider> 
-        
       </Router>
   )
 }
