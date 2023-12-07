@@ -7,7 +7,7 @@ import Container from '../layouts/Container'
 import CarrinhoItem from '../CarrinhoItem';
 
 export default function Carrinho() {
-    const [carr, setCarr] = useState(null)
+    const [carr, setCarr] = useState([])
         
     useEffect(() => {
         (async () => {
@@ -38,7 +38,7 @@ export default function Carrinho() {
                         </div>
                         <CarrinhoItem/>
                     {
-                        carr != null && carr.map((item) => {
+                        carr != null && carr.length > 1 && carr.map((item) => {
                             <CarrinhoItem nome={item.nome} preco={item.preco} qtd={item.qtd}/>
                         })
                     }
