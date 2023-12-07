@@ -91,17 +91,35 @@ export default function CadastrarLivro() {
                 return toast.warning('ISBN não encontrado na database openlibrary.org');
             
             const { details, thumbnail_url } = result.data[`ISBN:${isbn}`];
-            console.log(result.data)
-            setAutor(details.authors.map(x => x.name).join(', '));
-            setEditora(details.publishers.join(', '));
-            setNome(details.title);
+            
+            const nonExistentFields = [];
+
+            if(Array.isArray(details.author)) {
+                setAutor(details.authors.map(x => x.name).join(', '));
+            } else nonExistentFields.push('autor');
+            if(Array.isArray(details.publisher)) {
+                setEditora(details.publishers.join(', '));
+            } else nonExistentFields.push('editora');
+            if(details.title !== undefined) {
+                setNome(details.title);
+            } else nonExistentFields.push('nome');
+            
+            if(nonExistentFields.length !== 0)
+                toast.warn(`Campo(s) de: ${nonExistentFields.join(', ')} inexistente(s) na database openlibrary.org`)
+            
             try {
+                toast.info('Baixando capa do livro...');
                 const largetThumbnailUrl = `${thumbnail_url.split('-S.')[0]}-L.jpg`;
                 setThumbnail(await toBase64FromUrl(largetThumbnailUrl));
+                toast.success('Capa baixada com sucesso!');
             } catch {
                 setThumbnail("");
+                toast.warn('Capa não disponível na database openlibrary.org');
             }
-        } catch {}
+            
+        } catch {
+            toast.warn('Erro de conexão com a database openlibrary.org');
+        }
     }
 
 
@@ -120,7 +138,7 @@ export default function CadastrarLivro() {
         if(!preco)
             return toast.error('Campo de preço não preenchido!');
 
-        if(Number.isNaN(preco) || Number(preco) < 0)
+        if(Number.isNaN(preco) || Number(preco) <= 0)
             return toast.error('Preço inválido!');
 
         if(!thumbnail)
@@ -138,7 +156,7 @@ export default function CadastrarLivro() {
             const result = await axios.post(Constants.BOOK_ADD_API_POST_URL, dadosLivro);
             const id = result.data.id;
             toast.success('Livro cadastrado com sucesso!');
-            navigate(`/livro/${id}`);
+            navigate(`/paginalivro/${id}`);
         } catch(e) {
             const result = e.response;
 
@@ -154,7 +172,7 @@ export default function CadastrarLivro() {
     return (
         <Container customClass='backgroundStandart'>
             <section className={styles.atualiza}>
-                <h2>CADASTRAR LIVROS</h2>
+                <h2>CADASTRAR LIVRO</h2>
                 <form action="">
                     <div className={thumbnail === '' ? styles.imgAtualiza : styles.imgAtualiza2} onClick={() => ref.current.click()}>
                         <img src={thumbnail} />

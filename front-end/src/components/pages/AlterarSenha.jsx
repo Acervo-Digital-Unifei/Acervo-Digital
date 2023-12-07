@@ -50,6 +50,9 @@ export default function AlterarSenha() {
 
         if(password !== passwordConfirm)
             return toast.error('Senha e confirmação de senha não combinam!');
+
+        if(password.length < 4)
+            return toast.error('Senha deve ter pelo menos 4 caracteres');
         
         const code = new URLSearchParams(location.search).get('code');
         if(!code) {

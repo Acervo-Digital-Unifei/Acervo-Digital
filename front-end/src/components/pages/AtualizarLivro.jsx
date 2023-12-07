@@ -168,7 +168,7 @@ export default function AtualizarLivro() {
         try {
             await axios.post(Constants.BOOK_UPDATE_API_POST_URL, dadosLivro);
             toast.success('Livro atualizado com sucesso!');
-            navigate(`/livro/${id}`);
+            navigate(`/paginalivro/${id}`);
         } catch(e) {
             const result = e.response;
 

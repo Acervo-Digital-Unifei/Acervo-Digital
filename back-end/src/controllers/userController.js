@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import { checkEmail, checkUsername } from '../utils/sanitizer.js';
+import { checkEmail, checkUsername, checkPassword } from '../utils/sanitizer.js';
 import { sendEmail } from '../utils/email.js'
 import crypto from 'crypto';
 
@@ -62,6 +62,9 @@ export async function register(req, res) {
 
     if(!checkUsername(username))
         return res.status(400).json({status: 'error', error: 'Invalid username. It must contain only letters, numbers and underscore, and must have a max size of 30 characters'});
+
+    if(!checkPassword(password))
+        return res.status(400).json({status: 'error', error: 'Invalid password. It must contain at least 4 characters'});
 
     User.findOne({
         $or: [
@@ -297,6 +300,9 @@ export async function requestChangePassword(req, res) {
             if(!password || typeof(password) !== 'string')
                 return res.status(422).json({status: 'error', error: 'Missing field password'});
             
+            if(!checkPassword(password))
+                return res.status(400).json({status: 'error', error: 'Invalid password. It must contain at least 4 characters'});
+
             let user = null;
             try {
                 user = await User.findById(userId).exec();

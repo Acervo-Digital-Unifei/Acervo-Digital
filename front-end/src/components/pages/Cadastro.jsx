@@ -37,6 +37,9 @@ export default function Cadastro() {
         if(password !== passwordConfirm)
             return toast.error('Senha e confirmação de senha não combinam!');
 
+        if(password.length < 4)
+            return toast.error('Senha deve ter pelo menos 4 caracteres');
+
         if(!checkName(name))
             return toast.error('Nome inválido. Seu nome só pode conter letras e espaços, e deve ter um tamanho máximo de 70 caracteres.')
 
