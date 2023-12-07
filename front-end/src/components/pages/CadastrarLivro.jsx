@@ -93,11 +93,10 @@ export default function CadastrarLivro() {
             const { details, thumbnail_url } = result.data[`ISBN:${isbn}`];
             
             const nonExistentFields = [];
-
-            if(Array.isArray(details.author)) {
+            if(Array.isArray(details.authors)) {
                 setAutor(details.authors.map(x => x.name).join(', '));
             } else nonExistentFields.push('autor');
-            if(Array.isArray(details.publisher)) {
+            if(Array.isArray(details.publishers)) {
                 setEditora(details.publishers.join(', '));
             } else nonExistentFields.push('editora');
             if(details.title !== undefined) {

@@ -1,5 +1,5 @@
 import Container from "../layouts/Container";
-import styles from './AtualizarLivro.module.css'
+import styles from './PaginaLivro.module.css'
 import Input from "../Input";
 import Button from "../Button";
 import { UserContext } from "../../App";
@@ -115,7 +115,7 @@ export default function PaginaLivro() {
             <p>{editora}Editora</p>
             <p>{autor}Autor</p>
 
-            '' <div className={styles.submit}>
+            <div className={styles.submit}>
               <Button text="Carrinho" customClass="marginless" onClick={addCarrinho} />
               <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
               <Button text="Deletar" customClass="marginless" onClick={deleteBook} />
