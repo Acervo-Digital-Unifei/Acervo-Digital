@@ -34,12 +34,18 @@ export default function Profile() {
                 <br/>
                 Email: {user.email}
                 <br/>
-                {user.privilege === 'admin' ? 'Administrador' : <></>}
+                Privilégio:{user.privilege === 'admin' ? 'Administrador' : <></>}
                 </h2>
+                    <div>
+                    <Link to ="/requisicaoalteraremail" >Alterar email!!</Link>
+                    <Link to ="/requisicaoalterarsenha" >Alterar senha!!</Link>
+
+                    </div>
+                    
+                    <button onClick={logout}>Logout</button>
+
+                    
                 
-                <Link to ="/requisicaoalteraremail" >Alterar email!!</Link>
-                <Link to ="/requisicaoalterarsenha" >Alterar senha!!</Link>
-                <button onClick={logout}>Logout</button>
             </section>
         </Container>
     )

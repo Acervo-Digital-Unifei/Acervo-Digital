@@ -179,16 +179,19 @@ export default function PaginaLivro() {
             <div className={styles.submit}>
               <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
               <Button text="Deletar" customClass="marginless" onClick={deleteBook} />
-            </div>
-            <div className={styles.submit}>
-              <select name="quantity-select" defaultValue={"0"} value={quantidade} onChange={e => setQuantidade(e.target.value)}>
-                <option value="0">Selecionar</option>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => <option value={x}>{x}</option>)}
-
-              </select>
-
               <Button text="Alterar Quantidade do Carrinho" customClass="marginless" onClick={updateCarrinho} />
+              <select name="quantity-select" forName="" defaultValue={"0"} value={quantidade} onChange={e => setQuantidade(e.target.value)}>
+                <option className="selectClass" value="0">Selecionar</option>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => <option value={x}>{x}</option>)}
+            
+              </select>
               <Button text="Remover do Carrinho" customClass="marginless" onClick={removerCarrinho} />
+            </div>
+
+            <div className={styles.submit}>
+              
+
+              
             </div>
           </div>
         </form>

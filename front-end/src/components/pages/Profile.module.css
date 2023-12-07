@@ -27,3 +27,40 @@
     border: none;
     cursor: pointer;
 }
+
+
+
+  .profileclass a {
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold; 
+    color: rgb(255, 136, 0);
+    transition: color .3s ease-in-out;
+
+  }
+  
+  .profileclass a:hover {
+    
+    text-decoration: underline; 
+    font-size: 20px;
+    color:rgb(122, 47, 12) ;
+    text-decoration: none;
+    font-weight: bold; 
+    margin-right: 10px; 
+
+    
+  }
+
+  button {
+    margin: 10px;
+    font-size: 20px;
+    transition: color;
+    transition: 0.7s;
+  }
+ 
+  button:hover {
+    margin: 10px;
+    font-size: 25px;
+    background-color: rgb(255, 136, 0);
+
+  }

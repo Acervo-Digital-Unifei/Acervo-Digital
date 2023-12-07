@@ -23,6 +23,7 @@ import SobreNos from './components/pages/SobreNos'
 import CadastrarLivro from './components/pages/CadastrarLivro'
 import PaginaLivro from './components/pages/PaginaLivro'
 
+
 export const UserContext = React.createContext(null);
 
 function App() {  
@@ -55,6 +56,7 @@ function App() {
               <Route path="/cadastrarlivro" element={<CadastrarLivro />} />
               <Route path="/atualizarlivro/:id" element={<AtualizarLivro />} />
               <Route path="/paginalivro/:id" element={<PaginaLivro />} />
+             
           </Routes>
           <Footer/>
         </UserContext.Provider> 
