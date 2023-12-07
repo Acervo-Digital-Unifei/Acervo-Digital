@@ -10,7 +10,11 @@
     flex-wrap: wrap;
     justify-content: space-between;
   }
-  
+
+.buscador {
+  margin-top: 50px;
+}
+
   .livro_item {
     border: 1px solid #ddd;
     padding: 10px;
@@ -18,3 +22,11 @@
     width: 200px; /* Ajuste conforme necessário */
   }
   
+.grid {
+    display: grid;
+    grid-template-rows: 800px 800px;
+    grid-template-columns: 200px 200px 200px;
+    justify-content: space-around;
+
+}
+
