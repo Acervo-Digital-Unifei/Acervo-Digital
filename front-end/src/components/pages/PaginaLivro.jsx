@@ -18,16 +18,67 @@ export default function PaginaLivro() {
   const [editora, setEditora] = useState("");
   const [autor, setAutor] = useState("");
   const [thumbnail, setThumbnail] = useState("");
+  const [quantidade, setQuantidade] = useState(0);
 
   const { user, setUser } = useContext(UserContext);
 
-  const addCarrinho = async (e) => {
+  const removerCarrinho = async (e) => {
     e.preventDefault();
-    if (user !== null) {
-      Navigate("/carrinho");
-    } else {
+    if (user === null) {
       toast.error("Você precisa estar logado!!");
       Navigate('/login')
+      return;
+    }
+
+    try {
+      const carrinho = JSON.parse(localStorage.getItem('carrinho'));
+      if (carrinho[params.id] === undefined || carrinho[params.id] === 0) {
+        toast.error('Você já não tem nenhum deste item no carrinho');
+        return;
+      }
+
+      carrinho[params.id] = 0;
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      setQuantidade(0);
+      toast.success(`Item removido do carrinho.`);
+    } catch {
+      toast.error('Você já não tem nenhum deste item no carrinho');
+      return;
+    }
+
+  }
+
+  const updateCarrinho = async (e) => {
+    e.preventDefault();
+    if (user === null) {
+      toast.error("Você precisa estar logado!!");
+      Navigate('/login')
+      return;
+    }
+
+    if (quantidade === 0) {
+      toast.error("Você não pode adicionar zero livros no carrinho!!");
+      return;
+    }
+
+    try {
+      const carrinho = JSON.parse(localStorage.getItem('carrinho'));
+      if (carrinho[params.id] !== undefined) {
+        carrinho[params.id] += Number(quantidade);
+        console.log(typeof (carrinho[params.id]))
+        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        toast.success(`Adicionado ${quantidade} livro(s) no carrinho.`);
+        return;
+      }
+
+      carrinho[params.id] = Number(quantidade);
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      toast.success(`Adicionado ${quantidade} livro(s) no carrinho.`);
+    } catch {
+      const carrinho = {};
+      carrinho[params.id] = Number(quantidade);
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+      toast.success(`Adicionado ${quantidade} livro(s) no carrinho`);
     }
   };
 
@@ -75,6 +126,13 @@ export default function PaginaLivro() {
       return;
     }
 
+    try {
+      const carrinho = JSON.parse(localStorage.getItem('carrinho'));
+      if (carrinho[params.id] !== undefined) {
+        setQuantidade(Number(carrinho[params.id]));
+      }
+    } catch {}
+
     (async () => {
       try {
         const result = await axios.get(`${Constants.BOOK_GET_BOOK_BY_ID_API_GET_URL}?id=${id}`);
@@ -119,9 +177,18 @@ export default function PaginaLivro() {
             </div>
 
             <div className={styles.submit}>
-              <Button text="Carrinho" customClass="marginless" onClick={addCarrinho} />
               <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
               <Button text="Deletar" customClass="marginless" onClick={deleteBook} />
+            </div>
+            <div className={styles.submit}>
+              <select name="quantity-select" defaultValue={"0"} value={quantidade} onChange={e => setQuantidade(e.target.value)}>
+                <option value="0">Selecionar</option>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => <option value={x}>{x}</option>)}
+
+              </select>
+
+              <Button text="Alterar Quantidade do Carrinho" customClass="marginless" onClick={updateCarrinho} />
+              <Button text="Remover do Carrinho" customClass="marginless" onClick={removerCarrinho} />
             </div>
           </div>
         </form>
