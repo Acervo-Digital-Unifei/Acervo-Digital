@@ -34,7 +34,7 @@ export default function Profile() {
                 <br/>
                 Email: {user.email}
                 <br/>
-                Privilégio:{user.privilege === 'admin' ? 'Administrador' : <></>}
+                Privilégio:{user.privilege === 'admin' ? 'Administrador' : 'Usuário'}
                 </h2>
                     <div>
                     <Link to ="/requisicaoalteraremail" >Alterar email!!</Link>
