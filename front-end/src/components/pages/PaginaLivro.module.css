@@ -59,3 +59,12 @@
 }
 
 
+.bookControls {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+.bookControls .lastButtons {
+    display: flex;
+    justify-content: space-around;
+}
