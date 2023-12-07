@@ -7,6 +7,7 @@ import ButtonSubmit from "../ButtonSubmit";
 import { UserContext } from '../../App'
 import { useRef, useState, useContext, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
+import * as Constants from '../../constants';
 
 export default function CadastrarLivro() {
     const [thumbnail, setThumbnail] = useState("");
@@ -44,7 +45,6 @@ export default function CadastrarLivro() {
     const handleAutorChange = (e) => {
         setAutor(e.target.value);
     };
-
 
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -134,7 +134,7 @@ export default function CadastrarLivro() {
         }
 
         try {
-            const result = await axios.post("http://localhost:3000/book/add", dadosLivro);
+            const result = await axios.post(Constants.BOOK_ADD_API_POST_URL, dadosLivro);
             const id = result.data.id;
             alert('Livro cadastrado com sucesso!');
             navigate(`/livro/${id}`);
@@ -168,7 +168,7 @@ export default function CadastrarLivro() {
                             customClass="backgroundStandart" value={editora} onChange={handleEditoraChange} />
                         <Input type='text' name='nomeChange' placeholder="Nome do livro"
                             customClass="backgroundStandart" value={nome} onChange={handleNomeChange} />
-                        <Input type='number' name='precoChange' placeholder="Preço"
+                        <Input type='number' name='precoChange' placeholder="Preço (em reais)"
                             customClass="backgroundStandart" value={preco} onChange={handlePrecoChange} />
                         <div className={styles.submit}>
                             <Input type='number' name='isbn' placeholder="ISBN"

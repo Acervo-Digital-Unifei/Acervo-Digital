@@ -74,11 +74,11 @@ function App() {
               <Route path="/requisicaoalterarsenha" element={<RequisitarAlteracaoDeSenha />}/> 
               <Route path="/contato" element={<Contato />} />        
               <Route path="/confirmaremail" element={<ConfirmarEmail />} />
-              <Route path="/atualizarlivro" element={<AtualizarLivro />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/comprafinalizada" element={<CompraFinalizada />} />
               <Route path="/sobrenos" element={<SobreNos />} />
-              <Route path="/cadastrarlivros" element={<CadastrarLivro />} />
+              <Route path="/cadastrarlivro" element={<CadastrarLivro />} />
+              <Route path="/atualizarlivro/:id" element={<AtualizarLivro />} />
               
                       
           </Routes>
