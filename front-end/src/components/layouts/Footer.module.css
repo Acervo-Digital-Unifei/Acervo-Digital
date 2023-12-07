@@ -20,6 +20,3 @@ footer a {
     transition: 0.2s all ease-in-out;
 }
 
-footer a:hover{
-    border-bottom: 2px solid var(--marrom-principal);
-}

@@ -3,9 +3,11 @@ import {Link} from 'react-router-dom'
 export default function Card({title, author, publisher, price, thumbnail}) {
     return (
         <section className={styles.card}>
-            <div className={styles.img}>
-                <img src={thumbnail} alt="" />
-            </div>
+            <Link to="">
+                <div className={styles.img}>
+                    <img src={thumbnail} alt="" />
+                </div>
+            </Link>
             <section className={styles.cardFooter}>
                 <h3>{title}</h3>
                 <div className={styles.cardInfo}>
