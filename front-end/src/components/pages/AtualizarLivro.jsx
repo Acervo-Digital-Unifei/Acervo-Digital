@@ -121,17 +121,34 @@ export default function AtualizarLivro() {
                 return toast.warning('ISBN não encontrado na database openlibrary.org');
             
             const { details, thumbnail_url } = result.data[`ISBN:${isbn}`];
-            console.log(result.data)
-            setAutor(details.authors.map(x => x.name).join(', '));
-            setEditora(details.publishers.join(', '));
-            setNome(details.title);
+            
+            const nonExistentFields = [];
+            if(Array.isArray(details.authors)) {
+                setAutor(details.authors.map(x => x.name).join(', '));
+            } else nonExistentFields.push('autor');
+            if(Array.isArray(details.publishers)) {
+                setEditora(details.publishers.join(', '));
+            } else nonExistentFields.push('editora');
+            if(details.title !== undefined) {
+                setNome(details.title);
+            } else nonExistentFields.push('nome');
+            
+            if(nonExistentFields.length !== 0)
+                toast.warn(`Campo(s) de: ${nonExistentFields.join(', ')} inexistente(s) na database openlibrary.org`)
+            
             try {
+                toast.info('Baixando capa do livro...');
                 const largetThumbnailUrl = `${thumbnail_url.split('-S.')[0]}-L.jpg`;
                 setThumbnail(await toBase64FromUrl(largetThumbnailUrl));
+                toast.success('Capa baixada com sucesso!');
             } catch {
                 setThumbnail("");
+                toast.warn('Capa não disponível na database openlibrary.org');
             }
-        } catch {}
+            
+        } catch {
+            toast.warn('Erro de conexão com a database openlibrary.org');
+        }
     }
 
 
@@ -168,7 +185,7 @@ export default function AtualizarLivro() {
         try {
             await axios.post(Constants.BOOK_UPDATE_API_POST_URL, dadosLivro);
             toast.success('Livro atualizado com sucesso!');
-            navigate(`/livro/${id}`);
+            navigate(`/paginalivro/${id}`);
         } catch(e) {
             const result = e.response;
 

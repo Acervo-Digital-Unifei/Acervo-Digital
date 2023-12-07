@@ -102,8 +102,8 @@ export async function getBooks(req, res) {
         } : {};
         
         const books = (await Book.find(query)
-        .skip(20 * page)
-        .limit(20))
+        .skip(50 * page)
+        .limit(50))
         .map((x) => {
             return {
                 id: x._id,
@@ -132,7 +132,6 @@ export async function getBookById(req, res) {
         if (book === null)
             return res.status(404).json({ status: 'error', error: 'Book not found' });
 
-        
         return res.status(200).json({ status: 'ok', book: {
             id: book._id,
             title: book.title,

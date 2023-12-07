@@ -11,3 +11,7 @@ export function checkUsername(username) {
         .toLowerCase()
         .match(/^[ a-zA-ZÀ-ÿ\u00f1\u00d1]*$/g);
 };
+
+export function checkPassword(password) {
+    return (typeof(password === 'string') && password.length >= 4);
+};

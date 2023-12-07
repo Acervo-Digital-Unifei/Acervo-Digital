@@ -1,9 +1,9 @@
 import styles from './Card.module.css'
 import {Link} from 'react-router-dom'
-export default function Card({title, author, publisher, price, thumbnail}) {
+export default function Card({title, author, publisher, price, thumbnail, id}) {
     return (
         <section className={styles.card}>
-            <Link to="">
+            <Link to={`/paginalivro/${id}`}>
                 <div className={styles.img}>
                     <img src={thumbnail} alt="" />
                 </div>
@@ -17,7 +17,7 @@ export default function Card({title, author, publisher, price, thumbnail}) {
                     </div>
                     <p>R${price}</p>
                 </div>
-                <button><Link to=''>comprar</Link></button>
+                <button><Link to={`/paginalivro/${id}`}>Comprar</Link></button>
             </section>
         </section>
     )
