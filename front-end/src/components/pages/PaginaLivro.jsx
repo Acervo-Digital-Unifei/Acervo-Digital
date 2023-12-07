@@ -1,6 +1,6 @@
 import Container from "../layouts/Container";
 import styles from './PaginaLivro.module.css'
-import Input from "../Input";
+
 import Button from "../Button";
 import { UserContext } from "../../App";
 import { useEffect, useState, useRef } from "react";
@@ -9,6 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useContext } from "react";
 import * as Constants from '../../constants';
+
 
 export default function PaginaLivro() {
   const Navigate = useNavigate();
@@ -176,16 +177,20 @@ export default function PaginaLivro() {
                 <p className={styles.price}>R${preco}</p>
             </div>
 
-            <div className={styles.submit}>
-              <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
-              <Button text="Deletar" customClass="marginless" onClick={deleteBook} />
-              <Button text="Alterar Quantidade do Carrinho" customClass="marginless" onClick={updateCarrinho} />
-              <select name="quantity-select" forName="" defaultValue={"0"} value={quantidade} onChange={e => setQuantidade(e.target.value)}>
-                <option className="selectClass" value="0">Selecionar</option>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => <option value={x}>{x}</option>)}
-            
-              </select>
-              <Button text="Remover do Carrinho" customClass="marginless" onClick={removerCarrinho} />
+            <div className={styles.bookControls}>
+              <div className={styles.submit}>
+                <Button text="Atualiza" customClass="marginless" onClick={goToAtualiza} />
+                <Button text="Deletar" customClass="marginless" onClick={deleteBook} />
+                <Button text={`Adicionar`} customClass="marginless" onClick={updateCarrinho} 
+                emote={true}/>
+              </div>
+              <div className={styles.lastButtons}>
+                <select name="quantity-select" forName="" defaultValue={"0"} value={quantidade} onChange={e => setQuantidade(e.target.value)}>
+                  <option className="selectClass" value="0">Selecionar</option>
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(x => <option value={x}>{x}</option>)}
+                </select>
+                <Button text="Remover do Carrinho" customClass="marginless" onClick={removerCarrinho} />
+              </div>
             </div>
 
             <div className={styles.submit}>
