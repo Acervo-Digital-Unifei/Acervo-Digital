@@ -8,12 +8,17 @@ export default function SobreNos() {
         <Container customClass='backgroundStandart'>
             <section className={styles.sobreClass}>
                 <h2>Sobre nós</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan euismod neque, vel fermentum risus ullamcorper ut. Ut sit amet malesuada nunc. Vivamus facilisis mauris non libero fermentum, vel dictum orci interdum. Nullam eu quam nec turpis convallis auctor vel in tortor. Aliquam vel purus nec felis placerat suscipit. In hac habitasse platea dictumst. Duis eu tortor sed odio ullamcorper varius.
+                <p>ACERVO DIGITAL: UMA BIBLIOTECA VIRTUAL PARA O FUTURO DA EDUCAÇÃO
 
-Quisque vel leo eu metus tincidunt lacinia. Suspendisse potenti. Vivamus nec ante eu ligula aliquet dignissim eu vitae risus. Etiam eu neque non odio rhoncus hendrerit. Aliquam nec varius turpis, eu congue urna. Sed id eleifend mauris, nec efficitur elit. Nunc vel hendrerit nulla, vel fringilla risus. Fusce id enim ut ligula hendrerit bibendum eu sit amet arcu. Nulla facilisi.
+No ápice do avanço tecnológico e da revolução digital, surge uma iniciativa inovadora que promete transformar a maneira como acessamos o conhecimento: a Biblioteca Virtual Acervo Digital. Concebida como parte integrante de um projeto final de desenvolvimento web, essa plataforma surge como resposta às demandas crescentes por soluções educacionais mais acessíveis, flexíveis e interativas.
 
-Integer ullamcorper, erat non bibendum varius, justo elit ultrices tellus, id tincidunt eros lectus vitae sapien. Fusce sit amet tortor eget justo aliquam euismod. Curabitur ut luctus orci. Nulla facilisi. Vivamus gravida, metus eu rhoncus fermentum, tellus tortor luctus ex, et tincidunt arcu elit nec quam. Fusce vel arcu ut odio fermentum vestibulum. Curabitur sodales urna sit amet lacus tempor, a sodales est semper.
-Vestibulum euismod a mauris vel ultrices. Nam vehicula nibh ut elit finibus, in fringilla dolor rhoncus. Fusce volutpat, sem ac euismod sollicitudin, ligula velit efficitur libero, id cursus dui velit in dolor. Nulla facilisi. Aliquam erat volutpat. Sed vestibulum sem eget malesuada gravida. Nullam hendrerit mauris eu augue posuere, vel gravida turpis bibendum. Vivamus in justo nec augue rhoncus congue.</p>
+Visão e Missão:
+
+A Acervo Digital nasce com a visão audaciosa de democratizar o acesso ao conhecimento, eliminando barreiras físicas e financeiras que frequentemente limitam a educação. Nossa missão é proporcionar uma experiência de aprendizado enriquecedora, conectando estudantes, pesquisadores e entusiastas a um vasto repositório de informações de forma digital e interativa.
+
+Arquitetura e Tecnologia:
+
+Desenvolvida como parte essencial do projeto final de web, a Biblioteca Virtual Acervo Digital foi construída com base nas mais recentes tecnologias web. Utilizando uma arquitetura escalável e segura, garantimos não apenas o acesso fácil, mas também a integridade e confidencialidade das informações. A interface intuitiva e responsiva foi projetada para proporcionar uma experiência de usuário fluida em dispositivos variados, tornando o aprendizado acessível em qualquer lugar, a qualquer momento.</p>
             </section>
         </Container>
     )
