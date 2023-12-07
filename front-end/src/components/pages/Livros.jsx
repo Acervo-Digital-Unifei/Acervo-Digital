@@ -20,9 +20,20 @@ export default function Livros() {
             setVisibleBooks(books);
         })();
     }, []);
-    
 
-    return( 
+
+    const onChange = (e) => {
+        const filter = e.target.value.toLowerCase().trim();
+
+        const visibleBooks = books.filter(x => {
+            const searchableField = `${x.title}|${x.author}|${x.publisher}`.toLocaleLowerCase();
+            return searchableField.includes(filter);
+        });
+
+        setVisibleBooks(visibleBooks);
+    }
+
+    return (
         <Container customClass='backgroundStandartG'>
             <h2></h2>
             <section className={styles.livros_busca}>
@@ -37,14 +48,7 @@ export default function Livros() {
                             id={livro.id}
                         />))
                     }
-                    {
-                        
-                    }
                 </div>
-               {/* <Card title={(livro.title)} author={livro.author} publisher={livro.publisher}
-               price={livro.price}
-               /> */}
-                    
             </section>
         </Container>
     )
