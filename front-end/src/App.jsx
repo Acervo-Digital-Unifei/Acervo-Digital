@@ -17,6 +17,9 @@ import AlterarSenha  from './components/pages/AlterarSenha'
 import AlterarEmail from './components/pages/AlterarEmail'
 import RequisitarAlteracaoDeEmail from './components/pages/RequisitarAlteracaoDeEmail'
 import AtualizarLivro from './components/pages/AtualizarLivro'
+import Profile from './components/pages/Profile'
+import CompraFinalizada from './components/pages/CompraFinalizada'
+import SobreNos from './components/pages/SobreNos'
 
 export const UserContext = React.createContext(null);
 
@@ -74,6 +77,10 @@ function App() {
               <Route path="/contato" element={<Contato />} />        
               <Route path="/confirmaremail" element={<ConfirmarEmail />} />
               <Route path="/atualizarlivro" element={<AtualizarLivro />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/comprafinalizada" element={<CompraFinalizada />} />
+              <Route path="/sobrenos" element={<SobreNos />} />
+              
                       
           </Routes>
           <Footer/>
