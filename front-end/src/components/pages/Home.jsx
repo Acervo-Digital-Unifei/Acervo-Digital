@@ -4,7 +4,7 @@ export default function Home() {
     return (
         <Container customClass='background-img'>
             <section>
-                <h1>Home</h1>
+               
             </section>
         </Container>
     )
