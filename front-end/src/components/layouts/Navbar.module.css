@@ -4,7 +4,7 @@ header {
     align-items: center; 
     height: 200px;
     justify-content: space-around;
-    border-bottom: 2px solid #8C513B;
+    border-bottom: 2px solid #8C513B;  
 }
 
 .navbar {
@@ -16,6 +16,9 @@ header {
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid var(--marrom-principal) ;
+    box-shadow: 1px 1px 4px 3px rgba(0, 0, 0, 0.459);
+    z-index: 5;
+    position: relative;
 }
 .list {
     display: flex;

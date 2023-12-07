@@ -112,8 +112,8 @@ export default function PaginaLivro() {
             <h3>{nome}</h3>
             <div className={styles.editInfos}>
                 <div className={styles.edit}>
-                    <p>Editora: {editora}</p>
-                    <p>Autor: {autor}</p>
+                    <p><span>Editora:</span> {editora}</p>
+                    <p><span>Autor:</span> {autor}</p>
                 </div>
                 <p className={styles.price}>R${preco}</p>
             </div>

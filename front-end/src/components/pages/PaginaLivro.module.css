@@ -10,7 +10,9 @@
     height: 500px;
     background-color: #F2ECCE;
 }
-
+.imgAtualiza img {
+    box-shadow: 1px 1px 2px 2px rgba(0, 0, 0, 0.329);
+}
 .atualiza form{
     margin-top: 80px;
     display: flex;
@@ -33,6 +35,9 @@
 .editInfos {
     display: flex;
     justify-content: space-between;
+}
+.editInfos span	{
+    color: gray;
 }
 .price {
     color: royalblue;
