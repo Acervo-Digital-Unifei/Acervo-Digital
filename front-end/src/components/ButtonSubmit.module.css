@@ -20,6 +20,11 @@
     margin: 0px;
     padding: .5rem 3rem;
 }
+
+.ml {
+  margin-left: 40px;
+  padding: 10rem 10rem; 
+}
 /*
 .buttonSubmit:hover {
     animation: bubble 0.4s ease-out;
