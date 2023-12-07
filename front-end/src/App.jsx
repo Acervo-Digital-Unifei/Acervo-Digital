@@ -35,7 +35,7 @@ function App() {
   return (
     <Router>
         <UserContext.Provider value={{user, setUser}}>
-          <Navbar props={lista}/>
+          <Navbar/>
           <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/livros" element={<Livros />} />

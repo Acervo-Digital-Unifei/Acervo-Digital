@@ -8,7 +8,7 @@ import { UserContext } from '../../App';
 import { useContext } from 'react';
 
 
-export default function Navbar({props}) {
+export default function Navbar() {
     const { user, setUser } = useContext(UserContext);
     return (
         <nav className={styles.navbar}>
