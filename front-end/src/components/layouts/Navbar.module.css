@@ -5,8 +5,8 @@ header {
     height: 200px;
     justify-content: space-around;
     border-bottom: 2px solid #8C513B;  
+   
 }
-
 .navbar {
     font-family: var(--font-principal);
     display: flex;
